@@ -1,3 +1,9 @@
+// Configure database
+require('./config/db.config')
+
+// Configure dotenv
+require('dotenv').config()
+
 const express = require('express');
 const app = express();
 
