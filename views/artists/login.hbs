@@ -1,0 +1,36 @@
+<div class="register-body">  
+  {{#if errors}}
+    <div class="alert alert-danger mt-2">
+      review form data
+    </div>
+  {{/if}}
+
+  {{#if errorPasswordOrEmail}}
+    <div class="alert alert-danger mt-2">
+      {{errorPasswordOrEmail}}
+    </div>
+  {{/if}}
+
+  <form action="/login" method="post">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input name="email" value="{{newArtist.email}}" type="email" class="form-control {{#if errors.email}}is-invalid{{/if}} {{#if errorPasswordOrEmail}}is-invalid{{/if}}" id="email" />
+       {{#if errors.email}}
+        <div class="invalid-feedback">
+          {{errors.email}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="mb-3">
+      <label for="password">Password</label>
+      <input name="password" value="{{newArtist.password}}" type="password" class="form-control {{#if errors.password}}is-invalid{{/if}}" id="password" />
+      {{#if errors.password}}
+        <div class="invalid-feedback">
+          {{errors.password}}
+        </div>
+      {{/if}}
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+  <a href="/register">Register</a>
+</div>

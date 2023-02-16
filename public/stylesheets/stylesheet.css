@@ -2,7 +2,7 @@ h1 {
   color: red
 }
 
-.about-body {
+.about-body, .register-body, .login-body {
   margin:auto;
   width: 900px;
   display: flex;
@@ -10,7 +10,7 @@ h1 {
   align-items: center;
 }
 
-.about-body form{
+.about-body form, .register-body form, .login-body form {
   width: 400px;
   display: flex;
   flex-direction: column;

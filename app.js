@@ -14,6 +14,11 @@ app.use(logger('dev'))
 // Configure static files
 app.use(express.static(`${__dirname}/public`))
 
+// Configure cookie of session
+const { session, loadSessionArtist } = require('./config/session.config')
+app.use(session)
+app.use(loadSessionArtist)
+
 // Configure views
 require('./config/hbs.config')
 app.set('view engine', 'hbs')
@@ -28,7 +33,7 @@ app.use('/', router)
 
 // Configure global errors
 app.use('/', (error, req, res, next) => {
-  error.status(500)
+  res.status(500)
   console.error(`Global error ${error}`)
   res.send(error)
 })

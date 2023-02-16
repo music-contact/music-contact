@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const Schema = mongoose.Schema
 
@@ -24,7 +25,6 @@ const artistSchema = new Schema({
   role: {
     type: String,
     enum: ['artist', 'group'],
-    required: [true, 'role is required']
   },
   description: {
     type: String
@@ -46,7 +46,19 @@ const artistSchema = new Schema({
 
 })
 
-// mongoose.pre('save', function(){})
+artistSchema.pre('save', function(next){
+  if (this.isModified("password")) {
+    bcrypt
+    .hash(this.password, 10)
+    .then((encryptedPassword) => {
+      this.password = encryptedPassword
+      next();
+    })
+    .catch(next);
+  } else {
+    next();
+  }
+})
 
-const Artist = mongoose.model('Model', artistSchema)
+const Artist = mongoose.model('Artist', artistSchema)
 module.exports = Artist
