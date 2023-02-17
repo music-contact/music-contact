@@ -1,1 +1,12 @@
-<h1>This is the artist's page</h1>
+{{> header}}
+
+{{#each artists as |artist|}}
+<div class="card" style="width: 18rem;">
+  <img src="" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{artist.name}}</h5>
+    <p class="card-text">{{artist.description}}</p>
+    <a href="/artists/{{artist.id}}" class="btn btn-primary">See details</a>
+  </div>
+</div>
+{{/each}}

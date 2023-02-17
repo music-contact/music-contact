@@ -5,11 +5,20 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
 module.exports.list = (req, res, next) => {
-  res.render('artists/artists', {})
+  Artist.find({email: {$ne: req.artist?.email}})
+  .then(artists => {
+    console.log('artists > ', artists)
+    res.render('artists/artists', {artists})
+  })
+  .catch(next)
 }
 
 module.exports.detail = (req, res, next) => {
-  res.send('')
+  Artist.findById(req.params.id)
+  .then(artist => {
+    res.render('artists/artist', {artist})
+  })
+  .catch(next)
 }
 
 module.exports.login = (req, res, next) => {
@@ -72,6 +81,13 @@ module.exports.doRegister = (req, res, next) => {
 
 }
 
+module.exports.doLogout = (req, res, next) => {
+  req.session.destroy()
+  res.clearCookie('connect.sid')
+  res.redirect('/login')
+}
+
 module.exports.edit = (req, res, next) => {
+  console.log('currentArtist > ', res.locals.currentArtist)
   res.render('artists/personal-profile', {})
 }

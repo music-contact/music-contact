@@ -22,10 +22,6 @@ const artistSchema = new Schema({
     required: [true, 'password is required' ],
     minLength: [8, 'min length is 8']
   },
-  role: {
-    type: String,
-    enum: ['artist', 'group'],
-  },
   description: {
     type: String
   },
@@ -42,7 +38,10 @@ const artistSchema = new Schema({
   },
   socialMedia: {
     type: [String]
-  } 
+  },
+  groups: {
+    type: [String] //pendiente de conectar con la coleccion de grupos
+  }
 
 })
 
