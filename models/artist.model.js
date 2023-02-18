@@ -27,17 +27,20 @@ const artistSchema = new Schema({
   },
   findGroup: {
     type: String,
-    enum: ['available', 'not available']
+    default: "false"
   },
   forActing: {
     type: String,
-    enum: ['available', 'not available']
+    default: "false"
   },
   image: {
     type: String
   },
   socialMedia: {
-    type: [String]
+    facebook: String,
+    twitter: String,
+    instagram: String,
+    email: String
   },
   groups: {
     type: [String] //pendiente de conectar con la coleccion de grupos

@@ -33,3 +33,12 @@ h1 {
   min-height: 100vh;
   overflow-x:hidden;
 }
+
+.artist-bar-detail{
+  display: flex;
+  align-items: center;
+}
+
+.social-icon {
+  color: white;
+}

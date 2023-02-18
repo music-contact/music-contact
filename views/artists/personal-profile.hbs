@@ -1,2 +1,94 @@
 {{> header}}
 <h1>Personal profile</h1>
+<div class="register-body">
+  {{#if errors}}
+  <div class="alert alert-danger">
+    review form data
+  </div>
+  {{/if}}
+
+  <form action="/artists/{{currentArtist._id}}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input name="name" value="{{currentArtist.name}}" type="text"
+        class="form-control {{#if errors.name}}is-invalid{{/if}}" id="name" />
+      {{#if errors.name}}
+      <div class="invalid-feedback">
+        {{errors.name}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input name="email" value="{{currentArtist.email}}" type="email"
+        class="form-control {{#if errors.email}}is-invalid{{/if}}" id="email" />
+      {{#if errors.email}}
+      <div class="invalid-feedback">
+        {{errors.email}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="mb-3">
+      <label for="descriptionTextarea">Description</label>
+      <textarea name="description" class="form-control" placeholder="" id="descriptionTextarea">
+        {{currentArtist.description}}
+      </textarea>
+    </div>
+    <hr>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa fa-facebook-official social-icon fa-fw" aria-hidden="true"></i>
+      </span>
+      <input type="text" name="socialMedia[facebook]" value="{{currentArtist.socialMedia.facebook}}"
+        class="form-control">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa fa-instagram social-icon fa-fw" aria-hidden="true"></i>
+      </span>
+      <input type="text" name="socialMedia[instagram]" value="{{currentArtist.socialMedia.instagram}}"
+        class="form-control">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa fa-envelope-o social-icon fa-fw" aria-hidden="true"></i>
+      </span>
+      <input type="text" name="socialMedia[email]" value="{{currentArtist.socialMedia.email}}" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa fa-twitter-square social-icon fa-fw" aria-hidden="true"></i>
+      </span>
+      <input type="text" name="socialMedia[twitter]" value="{{currentArtist.socialMedia.twitter}}" class="form-control">
+    </div>
+    <hr>
+    <ul class="list-group list-group-horizontal mb-3">
+      <li class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" name="findGroup" value="true" id="findGroup" {{#checkBox
+          currentArtist.findGroup}}checked{{/checkBox}}>
+        <label class="form-check-label stretched-link" for="findGroup">Looking for group</label>
+      </li>
+      <li class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" name="forActing" value="true" id="forActing" {{#checkBox
+          currentArtist.forActing}}checked{{/checkBox}}>
+        <label class="form-check-label stretched-link" for="forActing">Available</label>
+      </li>
+    </ul>
+    <hr>
+    <div class="input-group mb-3">
+      <label class="input-group-text btn btn-warning" type="file" for="inputGroupFile01">Upload</label>
+      <input type="file" class="form-control" id="inputGroupFile01">
+    </div>
+    {{!-- <div class="mb-3">
+      <label for="password">Password</label>
+      <input name="password" value="{{currentArtist.password}}" type="password"
+        class="form-control {{#if errors.password}}is-invalid{{/if}}" id="password" />
+      {{#if errors.password}}
+      <div class="invalid-feedback">
+        {{errors.password}}
+      </div>
+      {{/if}}
+    </div> --}}
+    <button type="submit" class="btn btn-primary mt-3">Update</button>
+  </form>
+</div>
