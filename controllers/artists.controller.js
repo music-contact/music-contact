@@ -24,7 +24,11 @@ module.exports.detail = (req, res, next) => {
 }
 
 module.exports.login = (req, res, next) => {
-  res.render('artists/login', {})
+  if (req.artist) {
+    res.redirect('/artists')
+  } else {
+    res.render('artists/login', {})
+  }
 }
 
 module.exports.doLogin = (req, res, next) => {
@@ -51,7 +55,11 @@ module.exports.doLogin = (req, res, next) => {
 }
 
 module.exports.register = (req, res, next) => {
-  res.render('artists/register')
+  if (req.artist) {
+    res.redirect('/artists')
+  } else {
+    res.render('artists/register')
+  }
 }
 
 module.exports.doRegister = (req, res, next) => {
@@ -86,7 +94,7 @@ module.exports.doRegister = (req, res, next) => {
 module.exports.doLogout = (req, res, next) => {
   req.session.destroy()
   res.clearCookie('connect.sid')
-  res.redirect('/login')
+  res.redirect('/artists')
 }
 
 module.exports.edit = (req, res, next) => {
@@ -94,7 +102,10 @@ module.exports.edit = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
-  console.log('doEdit > ', req.body)
+  console.log('doEdit file > ', req.file)
+  if(req.file) {
+    req.body.image = req.file.path
+  }
   if (!req.body.findGroup) {
     req.body.findGroup = 'false'
   }

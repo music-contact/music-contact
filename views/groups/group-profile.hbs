@@ -6,10 +6,10 @@
   </div>
   {{/if}}
 
-  <form action="/artists/{{currentArtist._id}}" method="post" enctype="multipart/form-data">
+  <form action="/groups/new" method="post" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
-      <input name="name" value="{{currentArtist.name}}" type="text"
+      <input name="name" value="{{currentGroup.name}}" type="text"
         class="form-control {{#if errors.name}}is-invalid{{/if}}" id="name" />
       {{#if errors.name}}
       <div class="invalid-feedback">
@@ -19,7 +19,7 @@
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
-      <input name="email" value="{{currentArtist.email}}" type="email"
+      <input name="email" value="{{currentGroup.email}}" type="email"
         class="form-control {{#if errors.email}}is-invalid{{/if}}" id="email" />
       {{#if errors.email}}
       <div class="invalid-feedback">
@@ -30,7 +30,7 @@
     <div class="mb-3">
       <label for="descriptionTextarea">Description</label>
       <textarea name="description" class="form-control" placeholder="" id="descriptionTextarea">
-        {{currentArtist.description}}
+        {{currentGroup.description}}
       </textarea>
     </div>
     <hr>
@@ -38,38 +38,33 @@
       <span class="input-group-text" id="basic-addon1">
         <i class="fa fa-facebook-official social-icon fa-fw" aria-hidden="true"></i>
       </span>
-      <input type="text" name="socialMedia[facebook]" value="{{currentArtist.socialMedia.facebook}}"
+      <input type="text" name="socialMedia[facebook]" value="{{currentGroup.socialMedia.facebook}}"
         class="form-control">
     </div>
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">
         <i class="fa fa-instagram social-icon fa-fw" aria-hidden="true"></i>
       </span>
-      <input type="text" name="socialMedia[instagram]" value="{{currentArtist.socialMedia.instagram}}"
+      <input type="text" name="socialMedia[instagram]" value="{{currentGroup.socialMedia.instagram}}"
         class="form-control">
     </div>
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">
         <i class="fa fa-envelope-o social-icon fa-fw" aria-hidden="true"></i>
       </span>
-      <input type="text" name="socialMedia[email]" value="{{currentArtist.socialMedia.email}}" class="form-control">
+      <input type="text" name="socialMedia[email]" value="{{currentGroup.socialMedia.email}}" class="form-control">
     </div>
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon1">
         <i class="fa fa-twitter-square social-icon fa-fw" aria-hidden="true"></i>
       </span>
-      <input type="text" name="socialMedia[twitter]" value="{{currentArtist.socialMedia.twitter}}" class="form-control">
+      <input type="text" name="socialMedia[twitter]" value="{{currentGroup.socialMedia.twitter}}" class="form-control">
     </div>
     <hr>
     <ul class="list-group list-group-horizontal mb-3">
       <li class="list-group-item form-checkbox ">
-        <input class="form-check-input me-1" type="checkbox" name="findGroup" value="true" id="findGroup" {{#checkStatus
-          currentArtist.findGroup}}checked{{/checkStatus}}>
-        <label class="form-check-label stretched-link" for="findGroup">Looking for group</label>
-      </li>
-      <li class="list-group-item form-checkbox ">
         <input class="form-check-input me-1" type="checkbox" name="forActing" value="true" id="forActing" {{#checkStatus
-          currentArtist.forActing}}checked{{/checkStatus}}>
+          currentGroup.forActing}}checked{{/checkStatus}}>
         <label class="form-check-label stretched-link" for="forActing">Available</label>
       </li>
     </ul>
@@ -80,7 +75,7 @@
     </div>
     {{!-- <div class="mb-3">
       <label for="password">Password</label>
-      <input name="password" value="{{currentArtist.password}}" type="password"
+      <input name="password" value="{{currentGroup.password}}" type="password"
         class="form-control {{#if errors.password}}is-invalid{{/if}}" id="password" />
       {{#if errors.password}}
       <div class="invalid-feedback">

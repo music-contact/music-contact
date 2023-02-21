@@ -42,3 +42,16 @@ h1 {
 .social-icon {
   color: white;
 }
+
+.form-checkbox {
+  width: 50%;
+}
+
+.profile-head {
+  transform: translateY(4rem) !important;
+}
+
+/* Hide select file in input type=file */
+::file-selector-button { 
+  display: none;
+}

@@ -7,38 +7,37 @@
           <div class="media align-items-end profile-head">
             <div class="profile mr-3">
               <img
-                src="{{artist.image}}"
+                src="{{currentGroup.image}}"
                 alt="..." width="130" class="rounded mb-2 img-thumbnail">
-              {{#checkOwner artist.id currentArtist.id}}
+              {{!-- TODO HELPER --}}
+              {{#checkOwner artistGroup.artistId currentArtist.id}}
               <a href="/artists/{{../currentArtist.id}}/edit" class="btn btn-sm btn-block"
                 style="color: white !important;">Edit profile</a>
               {{/checkOwner}}
-              {{#checkOwner artist.id currentArtist.id}}
-              <a href="/groups/new" class="btn btn-sm btn-block" style="color: white !important;">Add Group</a>
-              {{/checkOwner}}
-              {{#checkSocial artist.socialMedia.facebook}}
-              <a href="{{artist.socialMedia.facebook}}" target="_blank" style="color: transparent;">
+
+              {{#checkSocial currentGroup.socialMedia.facebook}}
+              <a href="{{currentGroup.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial artist.socialMedia.instagram}}
-              <a href="{{artist.socialMedia.instagram}}" target="_blank" style="color: transparent;">
+              {{#checkSocial currentGroup.socialMedia.instagram}}
+              <a href="{{currentGroup.socialMedia.instagram}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-instagram social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial artist.socialMedia.email}}
-              <a href="{{artist.socialMedia.email}}" target="_blank" style="color: transparent;">
+              {{#checkSocial currentGroup.socialMedia.email}}
+              <a href="{{currentGroup.socialMedia.email}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-envelope-o social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial artist.socialMedia.twitter}}
-              <a href="{{artist.socialMedia.twitter}}" target="_blank" style="color: transparent;">
+              {{#checkSocial currentGroup.socialMedia.twitter}}
+              <a href="{{currentGroup.socialMedia.twitter}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-twitter-square social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
             </div>
             <div class="media-body mb-5 text-white">
-              <h4 class="mt-0 mb-4">{{artist.name}}</h4>
+              <h4 class="mt-0 mb-4">{{currentGroup.name}}</h4>
               {{!-- <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2 mb-2"></i>New York</p> --}}
             </div>
           </div>
@@ -47,14 +46,8 @@
           <ul class="list-inline mb-0 artist-bar-detail">
             <li class="list-inline-item">
               <span
-                class="badge {{#checkStatus currentArtist.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
-                {{#checkStatus currentArtist.forActing}} Available {{else}} Not Available {{/checkStatus}}
-              </span>
-            </li>
-            <li class="list-inline-item">
-              <span
-                class="badge {{#checkStatus currentArtist.findGroup}} text-bg-success {{else}} text-bg-danger {{/checkStatus}}">
-                {{#checkStatus currentArtist.findGroup}} Looking For Group {{else}} Not Looking For Group {{/checkStatus}}
+                class="badge {{#checkStatus currentGroup.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
+                {{#checkStatus currentGroup.forActing}} Available {{else}} Not Available {{/checkStatus}}
               </span>
             </li>
             <li class="list-inline-item">

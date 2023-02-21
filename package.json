@@ -1,17 +1,4 @@
 {
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "connect-mongo": "^4.6.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "hbs": "^4.2.0",
-    "mongoose": "^6.9.1",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  },
   "name": "music-contact",
   "description": "",
   "version": "1.0.0",
@@ -30,5 +17,20 @@
   "bugs": {
     "url": "https://github.com/music-contact/music-contact/issues"
   },
-  "homepage": "https://github.com/music-contact/music-contact#readme"
+  "homepage": "https://github.com/music-contact/music-contact#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.9.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }

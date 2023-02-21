@@ -2,7 +2,7 @@ const hbs = require('hbs')
 
 hbs.registerPartials(`${__dirname}/../views/partials`)
 
-hbs.registerHelper('checkBox', (value, options) => {
+hbs.registerHelper('checkStatus', (value, options) => {
   if (value === 'true') {
     return options.fn()
   } else {
@@ -10,8 +10,8 @@ hbs.registerHelper('checkBox', (value, options) => {
   }
 })
 
-hbs.registerHelper('checkSocial', (value, options) => {
-  if (value.length) {
+hbs.registerHelper('checkSocial', (link, options) => {
+  if (link?.length) {
     return options.fn()
   } else {
     return options.inverse()
@@ -19,7 +19,12 @@ hbs.registerHelper('checkSocial', (value, options) => {
 })
 
 hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
-  if(artistId == currentArtistId) {
+  // console.log('checkOwner artistId > ', artistId)
+  // console.log('checkOwner currentArtistId > ', currentArtistId)
+  if (!currentArtistId || !artistId){
+    return options.inverse()
+  }
+  if(artistId.toString() === currentArtistId) {
     return options.fn() 
   } else {
     return options.inverse()
