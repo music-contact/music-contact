@@ -55,3 +55,11 @@ h1 {
 ::file-selector-button { 
   display: none;
 }
+
+.link-white {
+  color: white
+}
+
+#dropdownUser1:hover {
+  color: #904e95;
+}

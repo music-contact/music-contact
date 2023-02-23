@@ -7,37 +7,38 @@
           <div class="media align-items-end profile-head">
             <div class="profile mr-3">
               <img
-                src="{{currentGroup.image}}"
+                src="{{artistGroup.groupId.image}}"
                 alt="..." width="130" class="rounded mb-2 img-thumbnail">
-              {{!-- TODO HELPER --}}
               {{#checkOwner artistGroup.artistId currentArtist.id}}
-              <a href="/artists/{{../currentArtist.id}}/edit" class="btn btn-sm btn-block"
+              <a href="/groups/{{../artistGroup.groupId.id}}/edit" class="btn btn-sm btn-block"
                 style="color: white !important;">Edit profile</a>
               {{/checkOwner}}
-
-              {{#checkSocial currentGroup.socialMedia.facebook}}
-              <a href="{{currentGroup.socialMedia.facebook}}" target="_blank" style="color: transparent;">
+              {{#checkOwner artistGroup.artistId currentArtist.id}}
+              <a href="/images/{{../artistGroup.groupId.id}}/new" class="btn btn-sm btn-block" style="color: white !important;">Add Photo</a>
+              {{/checkOwner}}
+              {{#checkSocial artistGroup.groupId.socialMedia.facebook}}
+              <a href="{{artistGroup.groupId.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial currentGroup.socialMedia.instagram}}
-              <a href="{{currentGroup.socialMedia.instagram}}" target="_blank" style="color: transparent;">
+              {{#checkSocial artistGroup.groupId.socialMedia.instagram}}
+              <a href="{{artistGroup.groupId.socialMedia.instagram}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-instagram social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial currentGroup.socialMedia.email}}
-              <a href="{{currentGroup.socialMedia.email}}" target="_blank" style="color: transparent;">
+              {{#checkSocial artistGroup.groupId.socialMedia.email}}
+              <a href="{{artistGroup.groupId.socialMedia.email}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-envelope-o social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
-              {{#checkSocial currentGroup.socialMedia.twitter}}
-              <a href="{{currentGroup.socialMedia.twitter}}" target="_blank" style="color: transparent;">
+              {{#checkSocial artistGroup.groupId.socialMedia.twitter}}
+              <a href="{{artistGroup.groupId.socialMedia.twitter}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-twitter-square social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
             </div>
             <div class="media-body mb-5 text-white">
-              <h4 class="mt-0 mb-4">{{currentGroup.name}}</h4>
+              <h4 class="mt-0 mb-4">{{artistGroup.groupId.name}}</h4>
               {{!-- <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2 mb-2"></i>New York</p> --}}
             </div>
           </div>
@@ -46,8 +47,8 @@
           <ul class="list-inline mb-0 artist-bar-detail">
             <li class="list-inline-item">
               <span
-                class="badge {{#checkStatus currentGroup.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
-                {{#checkStatus currentGroup.forActing}} Available {{else}} Not Available {{/checkStatus}}
+                class="badge {{#checkStatus artistGroup.groupId.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
+                {{#checkStatus artistGroup.groupId.forActing}} Available {{else}} Not Available {{/checkStatus}}
               </span>
             </li>
             <li class="list-inline-item">
@@ -70,25 +71,31 @@
             <p class="font-italic mb-0">Description content</p>
           </div>
         </div>
-        <div class="py-4 px-4">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+        {{#if images.length }}
+          <div class="py-4 px-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+            </div>
+            <div class="row">
+            {{#each images as |image|}}
+              <div class="col-lg-6 mb-2 pr-lg-1"><img
+                  src="{{image.url}}"
+                  alt="" class="img-fluid rounded shadow-sm">
+              </div>
+              {{#checkOwner ../artistGroup.artistId ../currentArtist.id}}
+              <form action="/images/groups/{{image.id}}/delete" method="post">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                    Delete
+                </button>
+              </form>
+              {{/checkOwner}}
+            {{/each}}
+            </div>
           </div>
-          <div class="row">
-            <div class="col-lg-6 mb-2 pr-lg-1"><img
-                src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-                alt="" class="img-fluid rounded shadow-sm"></div>
-            <div class="col-lg-6 mb-2 pl-lg-1"><img
-                src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-                alt="" class="img-fluid rounded shadow-sm"></div>
-            <div class="col-lg-6 pr-lg-1 mb-2"><img
-                src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                alt="" class="img-fluid rounded shadow-sm"></div>
-            <div class="col-lg-6 pl-lg-1"><img
-                src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-                alt="" class="img-fluid rounded shadow-sm"></div>
-          </div>
-        </div>
+        {{/if}}
       </div>
     </div>
   </div>

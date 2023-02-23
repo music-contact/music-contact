@@ -21,12 +21,15 @@ hbs.registerHelper('checkSocial', (link, options) => {
 hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
   // console.log('checkOwner artistId > ', artistId)
   // console.log('checkOwner currentArtistId > ', currentArtistId)
-  if (!currentArtistId || !artistId){
+  if (!artistId || !currentArtistId || artistId != currentArtistId){
     return options.inverse()
-  }
-  if(artistId.toString() === currentArtistId) {
-    return options.fn() 
   } else {
-    return options.inverse()
+    return options.fn()
   }
+
+  // if(artistId == currentArtistId) {
+  //   return options.fn() 
+  // } else {
+  //   return options.inverse()
+  // }
 }) 

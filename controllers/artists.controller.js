@@ -1,5 +1,7 @@
 
 const Artist = require('../models/artist.model')
+const ArtistGroup = require('../models/artist-group.model')
+const Images = require('../models/image.model')
 const mongoose = require('mongoose')
 
 const bcrypt = require('bcryptjs')
@@ -7,18 +9,26 @@ const bcrypt = require('bcryptjs')
 module.exports.list = (req, res, next) => {
   Artist.find({ email: { $ne: req.artist?.email } })
     .then(artists => {
-      console.log('artists > ', artists)
+      // console.log('artists > ', artists)
       res.render('artists/artists', { artists })
     })
     .catch(next)
 }
 
 module.exports.detail = (req, res, next) => {
-  console.log('detail > ', res.locals.currentArtist)
+  // console.log('detail > ', res.locals.currentArtist)
   Artist.findById(req.params.id)
     .then(artist => {
-      console.log('detail then > ', artist)
-      res.render('artists/artist', { artist })
+      // console.log('detail then > ', artist)
+      return ArtistGroup.find({ artistId: { $eq: artist.id}})
+            .populate('groupId')
+            .then(groups => {
+              // console.log('groups > ', groups)
+              return Images.find({ author: { $eq: artist.id}})
+              .then((images) => {
+                res.render('artists/artist', { artist, groups, images })   
+              })
+            })
     })
     .catch(next)
 }
@@ -63,7 +73,7 @@ module.exports.register = (req, res, next) => {
 }
 
 module.exports.doRegister = (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
   const newArtist = {
     name: req.body.name,
     email: req.body.email,
@@ -72,23 +82,21 @@ module.exports.doRegister = (req, res, next) => {
   Artist.findOne({ email: newArtist.email })
     .then(artist => {
       if (!artist) {
-        Artist.create(newArtist)
+        return Artist.create(newArtist)
           .then((artist) => {
             res.redirect('/login')
-          })
-          .catch((error) => {
-            if (error instanceof mongoose.Error.ValidationError) {
-              res.render('artists/register', { errors: error.errors, newArtist })
-            } else {
-              next(error)
-            }
           })
       } else {
         res.render('artists/register', {})
       }
     })
-    .catch(next)
-
+    .catch((error) => {
+      if (error instanceof mongoose.Error.ValidationError) {
+        res.render('artists/register', { errors: error.errors, newArtist })
+      } else {
+        next(error)
+      }
+    })
 }
 
 module.exports.doLogout = (req, res, next) => {
@@ -102,7 +110,7 @@ module.exports.edit = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
-  console.log('doEdit file > ', req.file)
+  // console.log('doEdit file > ', req.file)
   if(req.file) {
     req.body.image = req.file.path
   }
@@ -114,7 +122,7 @@ module.exports.doEdit = (req, res, next) => {
   }
   Artist.findByIdAndUpdate(req.artist.id, req.body)
   .then(artist => {
-    res.redirect(`/artists/${req.artist.id}`)
+    res.redirect(`/artists/${artist.id}`)
   })
   .catch(error => {
     if (error instanceof mongoose.Error.ValidationError) {

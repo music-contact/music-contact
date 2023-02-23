@@ -36,4 +36,13 @@ router.get('/groups/:id', groups.detail)
 router.get('/groups/:id/edit', secure.isAuthenticated, groups.edit)
 router.post('/groups/:id', secure.isAuthenticated, storage.single('image'), groups.doEdit)
 
+const images = require('../controllers/images.controllers')
+
+router.get('/images/:id/new', secure.isAuthenticated, images.new)
+router.post('/images/artists/:id/newImage', secure.isAuthenticated, storage.single('image'), images.doNew('artist'))
+router.post('/images/groups/:id/newImage', secure.isAuthenticated, storage.single('image'), images.doNew('group'))
+
+router.post('/images/artists/:id/delete', secure.isAuthenticated, images.delete('artist'))
+router.post('/images/groups/:id/delete', secure.isAuthenticated, images.delete('group'))
+
 module.exports = router
