@@ -12,7 +12,7 @@
                 style="color: white !important;">Edit profile</a>
               {{/checkOwner}}
               {{#checkOwner artist.id currentArtist.id}}
-              <a href="/groups/new" class="btn btn-sm btn-block" style="color: white !important;">Add Group</a>
+              <a href="/artistGroups/new" class="btn btn-sm btn-block" style="color: white !important;">Add Group</a>
               {{/checkOwner}}
               {{#checkOwner artist.id currentArtist.id}}
               <a href="/images/{{../currentArtist.id}}/new" class="btn btn-sm btn-block" style="color: white !important;">Add Photo</a>
@@ -48,14 +48,14 @@
           <ul class="list-inline mb-0 artist-bar-detail">
             <li class="list-inline-item">
               <span
-                class="badge {{#checkStatus currentArtist.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
-                {{#checkStatus currentArtist.forActing}} Available {{else}} Not Available {{/checkStatus}}
+                class="badge {{#checkStatus artist.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
+                {{#checkStatus artist.forActing}} Available {{else}} Not Available {{/checkStatus}}
               </span>
             </li>
             <li class="list-inline-item">
               <span
-                class="badge {{#checkStatus currentArtist.findGroup}} text-bg-success {{else}} text-bg-danger {{/checkStatus}}">
-                {{#checkStatus currentArtist.findGroup}} Looking For Group {{else}} Not Looking For Group
+                class="badge {{#checkStatus artist.findGroup}} text-bg-success {{else}} text-bg-danger {{/checkStatus}}">
+                {{#checkStatus artist.findGroup}} Looking For Group {{else}} Not Looking For Group
                 {{/checkStatus}}
               </span>
             </li>
@@ -79,11 +79,11 @@
             <p class="font-italic mb-0">Description content</p>
           </div>
         </div>
-        {{#if groups.length}}
+        {{#if artistGroups.length}}
         <div class="px-4 py-3">
-          <h5 class="mb-3">My groups</h5>
+          <h5 class="mb-3">My artistGroups</h5>
           <div class="row">
-            {{#each groups as |group|}}
+            {{#each artistGroups as |group|}}
             <div class="col-lg-6 mb-2 pr-lg-1">
               {{!-- <img
                 src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"

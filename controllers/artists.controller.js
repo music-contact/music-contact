@@ -22,11 +22,10 @@ module.exports.detail = (req, res, next) => {
       // console.log('detail then > ', artist)
       return ArtistGroup.find({ artistId: { $eq: artist.id}})
             .populate('groupId')
-            .then(groups => {
-              // console.log('groups > ', groups)
+            .then(artistGroups => {
               return Images.find({ author: { $eq: artist.id}})
               .then((images) => {
-                res.render('artists/artist', { artist, groups, images })   
+                res.render('artists/artist', { artist, artistGroups, images })   
               })
             })
     })

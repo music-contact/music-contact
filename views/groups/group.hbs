@@ -6,15 +6,14 @@
         <div class="px-4 pt-0 pb-4 cover">
           <div class="media align-items-end profile-head">
             <div class="profile mr-3">
-              <img
-                src="{{artistGroup.groupId.image}}"
-                alt="..." width="130" class="rounded mb-2 img-thumbnail">
+              <img src="{{artistGroup.groupId.image}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
               {{#checkOwner artistGroup.artistId currentArtist.id}}
               <a href="/groups/{{../artistGroup.groupId.id}}/edit" class="btn btn-sm btn-block"
                 style="color: white !important;">Edit profile</a>
               {{/checkOwner}}
               {{#checkOwner artistGroup.artistId currentArtist.id}}
-              <a href="/images/{{../artistGroup.groupId.id}}/new" class="btn btn-sm btn-block" style="color: white !important;">Add Photo</a>
+              <a href="/images/{{../artistGroup.groupId.id}}/new" class="btn btn-sm btn-block"
+                style="color: white !important;">Add Photo</a>
               {{/checkOwner}}
               {{#checkSocial artistGroup.groupId.socialMedia.facebook}}
               <a href="{{artistGroup.groupId.socialMedia.facebook}}" target="_blank" style="color: transparent;">
@@ -72,29 +71,29 @@
           </div>
         </div>
         {{#if images.length }}
-          <div class="py-4 px-4">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
-            </div>
-            <div class="row">
-            {{#each images as |image|}}
-              <div class="col-lg-6 mb-2 pr-lg-1"><img
-                  src="{{image.url}}"
-                  alt="" class="img-fluid rounded shadow-sm">
-              </div>
-              {{#checkOwner ../artistGroup.artistId ../currentArtist.id}}
-              <form action="/images/groups/{{image.id}}/delete" method="post">
-                <button type="submit" class="btn btn-danger btn-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                    </svg>
-                    Delete
-                </button>
-              </form>
-              {{/checkOwner}}
-            {{/each}}
-            </div>
+        <div class="py-4 px-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
           </div>
+          <div class="row">
+            {{#each images as |image|}}
+            <div class="col-lg-6 mb-2 pr-lg-1"><img src="{{image.url}}" alt="" class="img-fluid rounded shadow-sm">
+            </div>
+            {{#checkOwner ../artistGroup.artistId ../currentArtist.id}}
+            <form action="/images/groups/{{image.id}}/delete" method="post">
+              <button type="submit" class="btn btn-danger btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                </svg>
+                Delete
+              </button>
+            </form>
+            {{/checkOwner}}
+            {{/each}}
+          </div>
+        </div>
         {{/if}}
       </div>
     </div>
