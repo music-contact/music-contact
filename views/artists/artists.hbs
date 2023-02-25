@@ -5,8 +5,28 @@
   <img src="{{artist.image}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{artist.name}}</h5>
+    <ul class="list-inline mb-0 artist-bar-detail">
+      {{#if artist.isArtist}}
+        {{#each artist.groups as |group|}}
+        <li class="list-inline-item">
+          <span class="badge text-bg-warning">
+            {{group.groupId.name}}
+          </span>
+        </li>
+        {{/each}}
+      {{else}}
+        {{#each artist.artists as |person|}}
+        <li class="list-inline-item">
+          <span class="badge text-bg-warning">
+            {{person._id.name}}
+          </span>
+        </li>
+        {{/each}}
+      {{/if}}
+    </ul>
     <p class="card-text">{{artist.description}}</p>
-    <a href="/artists/{{artist.id}}" class="btn btn-primary">See details</a>
+    <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
+      class="btn btn-primary">See details</a>
   </div>
 </div>
 {{/each}}

@@ -57,11 +57,16 @@ module.exports.new = (req, res, next) => {
 };
 
 module.exports.doNew = (req, res, next) => {
+  console.log('groups doNew req.files > ', req.files)
+  if (req.files.length === 1) {
+    req.body.image = req.files[0].path;
+  }
   const newGroup = {
     name: req.body.name,
     email: req.body.email,
+    description: req.body.description,
+    image: req.body.image
   };
-  // console.log("newGroup > ", newGroup);
   Group.findOne({ email: newGroup.email })
     .then((group) => {
       if (!group) {
@@ -95,8 +100,8 @@ module.exports.edit = (req, res, next) => {
 };
 
 module.exports.doEdit = (req, res, next) => {
-  if (req.file) {
-    req.body.image = req.file.path;
+  if (req.files.length === 1) {
+    req.body.image = req.files[0].path;
   }
   if (!req.body.forActing) {
     req.body.forActing = "false";
@@ -113,3 +118,14 @@ module.exports.doEdit = (req, res, next) => {
       }
     });
 };
+
+module.exports.delete = (req, res, next) => {
+   Promise.all([
+    Group.findByIdAndDelete(req.params.id),
+    ArtistGroup.deleteMany({ groupId: req.params.id }),
+    Images.deleteMany({ author: req.params.id })
+   ]).then(([group, artistGroup, images]) => { // devuelve un array
+    res.redirect(`/artists/${req.artist.id}`)
+   })
+   .catch(next)
+}

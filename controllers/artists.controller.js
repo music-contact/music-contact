@@ -6,15 +6,6 @@ const mongoose = require('mongoose')
 
 const bcrypt = require('bcryptjs')
 
-module.exports.list = (req, res, next) => {
-  Artist.find({ email: { $ne: req.artist?.email } })
-    .then(artists => {
-      // console.log('artists > ', artists)
-      res.render('artists/artists', { artists })
-    })
-    .catch(next)
-}
-
 module.exports.detail = (req, res, next) => {
   // console.log('detail > ', res.locals.currentArtist)
   Artist.findById(req.params.id)
@@ -110,8 +101,8 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   // console.log('doEdit file > ', req.file)
-  if(req.file) {
-    req.body.image = req.file.path
+  if(req.files.length === 1) {
+    req.body.image = req.files[0].path
   }
   if (!req.body.findGroup) {
     req.body.findGroup = 'false'

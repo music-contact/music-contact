@@ -15,6 +15,16 @@
               <a href="/images/{{../artistGroup.groupId.id}}/new" class="btn btn-sm btn-block"
                 style="color: white !important;">Add Photo</a>
               {{/checkOwner}}
+              {{#checkOwner artistGroup.artistId currentArtist.id}}
+                  <form action="/groups/{{../artistGroup.groupId.id}}/delete" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                        Delete group
+                    </button>
+                  </form>
+                  {{/checkOwner}}
               {{#checkSocial artistGroup.groupId.socialMedia.facebook}}
               <a href="{{artistGroup.groupId.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
@@ -52,22 +62,22 @@
             </li>
             <li class="list-inline-item">
               <h5 class="font-weight-bold mb-0 d-block">215</h5><small class="text-muted"> <i
-                  class="fas fa-image mr-1"></i>Photos</small>
+                  class="fas mr-1"></i>Photos</small>
             </li>
             <li class="list-inline-item">
               <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted"> <i
-                  class="fas fa-user mr-1"></i>Followers</small>
+                  class="fas mr-1"></i>Followers</small>
             </li>
             <li class="list-inline-item">
               <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted"> <i
-                  class="fas fa-user mr-1"></i>Following</small>
+                  class="fas mr-1"></i>Following</small>
             </li>
           </ul>
         </div>
         <div class="px-4 py-3">
           <h5 class="mb-0">Description</h5>
           <div class="p-4 rounded shadow-sm bg-light">
-            <p class="font-italic mb-0">Description content</p>
+            <p class="font-italic mb-0">{{artistGroup.groupId.description}}</p>
           </div>
         </div>
         {{#if images.length }}

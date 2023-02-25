@@ -41,11 +41,16 @@ const artistSchema = new Schema({
     twitter: String,
     instagram: String,
     email: String
-  },
-  groups: {
-    type: [String] //pendiente de conectar con la coleccion de grupos
   }
+},
+{ timestamps: true }
+)
 
+artistSchema.virtual('groups', {
+  ref: 'ArtistGroup',
+  localField: '_id',
+  foreignField: 'artistId',
+  // justOne: false
 })
 
 artistSchema.pre('save', function(next){

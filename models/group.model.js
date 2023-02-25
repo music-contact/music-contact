@@ -31,6 +31,15 @@ const groupSchema = new Schema({
     instagram: String,
     email: String
   }
+},
+{ timestamps: true }
+)
+
+groupSchema.virtual('artists', {
+  ref: 'ArtistGroup',
+  localField: '_id',
+  foreignField: 'groupId',
+  // justOne: false
 })
 
 const Group = mongoose.model('Group', groupSchema)

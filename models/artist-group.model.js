@@ -13,5 +13,12 @@ const artistGroupSchema = new Schema({
   }
 })
 
+artistGroupSchema.virtual('artists', {
+  ref: 'Artist',
+  localField: 'artistId',
+  foreignField: '_id',
+  // justOne: false
+})
+
 const ArtistGroup = mongoose.model('ArtistGroup', artistGroupSchema)
 module.exports = ArtistGroup
