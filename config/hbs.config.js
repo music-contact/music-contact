@@ -1,4 +1,5 @@
 const hbs = require('hbs')
+const { options } = require('./routes.config')
 
 hbs.registerPartials(`${__dirname}/../views/partials`)
 
@@ -33,3 +34,15 @@ hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
   //   return options.inverse()
   // }
 }) 
+
+hbs.registerHelper("navActive", (currentPath, desiredPath) => {
+  return currentPath === desiredPath ? "active" : "";
+});
+
+hbs.registerHelper('checkImage', (image, options) => {
+  if (image?.length) {
+    return options.fn()
+  } else {
+    return options.inverse()
+  }
+})

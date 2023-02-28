@@ -37,6 +37,11 @@
                 <i class="fa fa-twitter-square social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
+              {{#checkSocial artist.socialMedia.spotify}}
+              <a href="{{artist.socialMedia.spotify}}" target="_blank" style="color: transparent;">
+                <i class="fa fa-spotify social-icon" aria-hidden="true"></i>
+              </a>
+              {{/checkSocial}}
             </div>
             <div class="media-body mb-5 text-white">
               <h4 class="mt-0 mb-4">{{artist.name}}</h4>

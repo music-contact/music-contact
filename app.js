@@ -1,6 +1,9 @@
 // Configure database
 require('./config/db.config')
 
+//Require Errors
+const createError = require('http-errors');
+
 // Configure dotenv
 require('dotenv').config()
 
@@ -24,6 +27,12 @@ require('./config/hbs.config')
 app.set('view engine', 'hbs')
 app.set('views', `${__dirname}/views`)
 
+//Configure current path
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path
+  next()
+})
+
 // Configure body
 app.use(express.urlencoded({})) // extended:false
 
@@ -32,10 +41,15 @@ const router = require('./config/routes.config')
 app.use('/', router)
 
 // Configure global errors
-app.use('/', (error, req, res, next) => {
-  res.status(500)
-  console.error(`Global error ${error}`)
-  res.send(error)
+app.use((req, res, next) => {
+  next(createError(404, 'Page not Found'))
+})
+
+app.use((error, req, res, next) => {
+  error = !error.status ? createError(500, error) : error
+  res.status(error.status)
+  res.render(`errors/${error.status}`)
+  console.error(`Global error ${error}`, error)
 })
 
 // Configure port 

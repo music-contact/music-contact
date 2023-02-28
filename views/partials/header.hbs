@@ -7,12 +7,13 @@
           <use xlink:href="#bootstrap"></use>
         </svg>
       </a>
-
+     
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/artists" class="nav-link px-2 link-secondary">Artists</a></li>
-        <li><a href="/about" class="nav-link px-2 text-white">Contact</a>
+        <li><img src="https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png" class="navbar-logo" alt="music-contact"></li>
+        <li><a href="/artists" class="nav-link px-2 {{navActive currentPath '/artists'}}">Artists</a></li>
+        <li><a href="/about" class="nav-link px-2 {{navActive currentPath '/about'}}">Contact</a>
         </li>
-      </ul>
+      </ul> 
 
       {{#if currentArtist}}
       <div class="dropdown text-end">

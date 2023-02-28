@@ -40,7 +40,8 @@ const artistSchema = new Schema({
     facebook: String,
     twitter: String,
     instagram: String,
-    email: String
+    email: String,
+    spotify: String
   }
 },
 { timestamps: true }

@@ -1,6 +1,6 @@
 {{> header}}
 
-{{#each artists as |artist|}}
+<!--{{#each artists as |artist|}}
 <div class="card" style="width: 18rem;">
   <img src="{{artist.image}}" class="card-img-top" alt="...">
   <div class="card-body">
@@ -29,4 +29,59 @@
       class="btn btn-primary">See details</a>
   </div>
 </div>
-{{/each}}
+{{/each}}-->
+
+<body class="artists-body">
+  <div class="filter-container">
+    <input type="text" placeholder="Search..." class="filter-input">
+  </div>
+  <div class="team-boxed">
+    <div class="container">
+      <div class="row people">
+        {{#each artists as |artist|}}
+          <div class="col-md-6 col-lg-4 item">
+              <div class="box"><img class="artists-image" src="{{#checkImage artist.image}}{{artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}">
+                  <h3 class="name">{{artist.name}}</h3>
+                  {{#if artist.isArtist}}
+                  <p class="title">Artist</p>
+                    {{#each artist.groups as |group|}}
+                    <li class="list-inline-item">
+                      <span class="badge text-bg-warning">
+                        {{group.groupId.name}}
+                      </span>
+                    </li>
+                    {{/each}}
+                  {{else}}
+                    <p class="title">Group</p>
+                    {{#each artist.artists as |person|}}
+                    <li class="list-inline-item">
+                      <span class="badge text-bg-warning">
+                        {{person._id.name}}
+                      </span>
+                    </li>
+                    {{/each}}
+                  {{/if}}
+                  <p class="description">{{artist.description}}</p>
+                  <div class="social">
+                    {{#checkSocial artist.socialMedia.facebook}}
+                    <a href="{{artist.socialMedia.facebook}}"><i class="fa fa-facebook-official"></i></a>
+                    {{/checkSocial}}
+                    {{#checkSocial artist.socialMedia.twitter}}
+                    <a href="{{artist.socialMedia.twitter}}"><i class="fa fa-twitter"></i></a>
+                    {{/checkSocial}}
+                    {{#checkSocial artist.socialMedia.instagram}}
+                    <a href="{{artist.socialMedia.instagram}}"><i class="fa fa-instagram"></i></a>
+                    {{/checkSocial}}
+                    {{#checkSocial artist.socialMedia.spotify}}
+                    <a href="{{artist.socialMedia.spotify}}"><i class="fa fa-spotify"></i></a>
+                    {{/checkSocial}}
+                  </div>
+                  <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
+                  class="btn btn-primary-see-detail mt-3">See details</a>
+              </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</body>
