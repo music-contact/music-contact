@@ -1,8 +1,10 @@
 
+const mongoose = require('mongoose')
 const Artist = require('../models/artist.model')
 const ArtistGroup = require('../models/artist-group.model')
 const Images = require('../models/image.model')
-const mongoose = require('mongoose')
+
+const SpotifyApi = require('../config/spotify.config')
 
 const bcrypt = require('bcryptjs')
 
@@ -16,7 +18,13 @@ module.exports.detail = (req, res, next) => {
             .then(artistGroups => {
               return Images.find({ author: { $eq: artist.id}})
               .then((images) => {
-                res.render('artists/artist', { artist, artistGroups, images })   
+                // Get an artist's top tracks
+                const spotifyId = artist.socialMedia.spotify?.split('/').pop()
+                return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
+                .then((data) => {
+                  artist.topTracks = data.body.tracks.map(track => ({name: track.name, url: track.preview_url}))                
+                  res.render('artists/artist', { artist, artistGroups, images })   
+                })
               })
             })
     })

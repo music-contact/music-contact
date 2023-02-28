@@ -56,7 +56,7 @@
                     {{#each artist.artists as |person|}}
                     <li class="list-inline-item">
                       <span class="badge text-bg-warning">
-                        {{person._id.name}}
+                        {{person.artistId.name}}
                       </span>
                     </li>
                     {{/each}}
@@ -64,16 +64,16 @@
                   <p class="description">{{artist.description}}</p>
                   <div class="social">
                     {{#checkSocial artist.socialMedia.facebook}}
-                    <a href="{{artist.socialMedia.facebook}}"><i class="fa fa-facebook-official"></i></a>
+                    <a href="{{artist.socialMedia.facebook}}" target="_blank"><i class="fa fa-facebook-official"></i></a>
                     {{/checkSocial}}
                     {{#checkSocial artist.socialMedia.twitter}}
-                    <a href="{{artist.socialMedia.twitter}}"><i class="fa fa-twitter"></i></a>
+                    <a href="{{artist.socialMedia.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
                     {{/checkSocial}}
                     {{#checkSocial artist.socialMedia.instagram}}
-                    <a href="{{artist.socialMedia.instagram}}"><i class="fa fa-instagram"></i></a>
+                    <a href="{{artist.socialMedia.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a>
                     {{/checkSocial}}
                     {{#checkSocial artist.socialMedia.spotify}}
-                    <a href="{{artist.socialMedia.spotify}}"><i class="fa fa-spotify"></i></a>
+                    <a href="{{artist.socialMedia.spotify}}" target="_blank"><i class="fa fa-spotify"></i></a>
                     {{/checkSocial}}
                   </div>
                   <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"

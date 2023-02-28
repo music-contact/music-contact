@@ -3,6 +3,8 @@ const ArtistGroup = require("../models/artist-group.model");
 const Images = require("../models/image.model");
 const mongoose = require("mongoose");
 
+const SpotifyApi = require('../config/spotify.config')
+
 module.exports.list = (req, res, next) => { };
 
 // find({ artistId: { $eq: artist.id}})
@@ -26,8 +28,18 @@ module.exports.detail = (req, res, next) => {
             }
             return Images.find({ author: { $eq: group.id } })
               .then((images) => {
-                // console.log('artistGroup after > ', artistGroup)
-                res.render("groups/group", { artistGroup, images });
+                // console.log('artistGroup after > ', artistGroup)                
+                const spotifyId = artistGroup.groupId.socialMedia?.spotify.split('/').pop()
+                console.log('spotifyId > ', spotifyId)
+                return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
+                .then((data) => {
+                  console.log('data.body > ', data.body)
+                  artistGroup.topTracks = data.body.tracks.map(track => ({name: track.name, url: track.preview_url}))                
+                  // res.render('artists/artist', { artist, artistGroups, images })
+                  // console.log('artistGroup.topTracks >', artistGroup.topTracks)   
+                  res.render("groups/group", { artistGroup, images });
+                })
+
               })
           })
       }

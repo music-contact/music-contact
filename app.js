@@ -41,11 +41,12 @@ const router = require('./config/routes.config')
 app.use('/', router)
 
 // Configure global errors
-app.use((req, res, next) => {
+app.use((req, res, next) => {  
   next(createError(404, 'Page not Found'))
 })
 
 app.use((error, req, res, next) => {
+  console.log('error > ', error)
   error = !error.status ? createError(500, error) : error
   res.status(error.status)
   res.render(`errors/${error.status}`)

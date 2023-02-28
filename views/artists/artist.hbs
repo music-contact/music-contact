@@ -18,27 +18,27 @@
               <a href="/images/{{../currentArtist.id}}/new" class="btn btn-sm btn-block" style="color: white !important;">Add Photo</a>
               {{/checkOwner}}
               {{#checkSocial artist.socialMedia.facebook}}
-              <a href="{{artist.socialMedia.facebook}}" target="_blank" style="color: transparent;">
+              <a href="{{../artist.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
               {{#checkSocial artist.socialMedia.instagram}}
-              <a href="{{artist.socialMedia.instagram}}" target="_blank" style="color: transparent;">
+              <a href="{{../artist.socialMedia.instagram}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-instagram social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
               {{#checkSocial artist.socialMedia.email}}
-              <a href="{{artist.socialMedia.email}}" target="_blank" style="color: transparent;">
+              <a href="{{../artist.socialMedia.email}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-envelope-o social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
               {{#checkSocial artist.socialMedia.twitter}}
-              <a href="{{artist.socialMedia.twitter}}" target="_blank" style="color: transparent;">
+              <a href="{{../artist.socialMedia.twitter}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-twitter-square social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
               {{#checkSocial artist.socialMedia.spotify}}
-              <a href="{{artist.socialMedia.spotify}}" target="_blank" style="color: transparent;">
+              <a href="{{../artist.socialMedia.spotify}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-spotify social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
@@ -65,16 +65,8 @@
               </span>
             </li>
             <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">215</h5><small class="text-muted"> <i
+              <h5 class="font-weight-bold mb-0 d-block">{{images.length}}</h5><small class="text-muted"> <i
                   class="fas mr-1"></i>Photos</small>
-            </li>
-            <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted"> <i
-                  class="fas mr-1"></i>Followers</small>
-            </li>
-            <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted"> <i
-                  class="fas mr-1"></i>Following</small>
             </li>
           </ul>
         </div>
@@ -83,6 +75,15 @@
           <div class="p-4 rounded shadow-sm bg-light">
             <p class="font-italic mb-0">{{artist.description}}</p>
           </div>
+        </div>
+        <div class="px-4 py-3">
+          <h5 class="mb-3">My Songs</h5>
+          <ul>
+          {{#each artist.topTracks as |track|}}
+            <p>{{track.name}}</p>
+            <p><audio controls src="{{track.url}}"></audio></p>
+          {{/each}}
+          </ul>
         </div>
         {{#if artistGroups.length}}
         <div class="px-4 py-3">

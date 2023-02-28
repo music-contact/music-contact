@@ -1,8 +1,9 @@
 const Artist = require('../models/artist.model')
-const Groups = require('../models/group.model')
+const Group = require('../models/group.model')
 const ArtistGroup = require('../models/artist-group.model')
 
 module.exports.list = (req, res, next) => {
+  console.log('list artist?.id> ', req.artist?.id)
   Promise.all([
     Artist.find({ email: { $ne: req.artist?.email } })
       .populate({
@@ -11,41 +12,29 @@ module.exports.list = (req, res, next) => {
           path: 'groupId'
         }
       }),
-    ArtistGroup.find({ artistId: { $ne: req.artist?.id } })
-    .populate('groupId')
+    ArtistGroup.find({ artistId: { $eq: req.artist?.id } })
+    .distinct('groupId')
+  ])
+  .then(([uniqueArtists, userGroups]) => {
+    // console.log('uniqueArtists > ', uniqueArtists)
+    // console.log('userGroups > ', userGroups)    
+    return Group.find({'_id': {$nin: userGroups}})
     .populate({
-      path: 'artists', // nos devuelve solo el id de cada grupo
+      path: 'artists',
       populate: {
-        path: '_id'
+        path: 'artistId'
       }
     })
-  ])
-  .then(([uniqueArtists, artistGroups]) => {
-    console.log('artistGroups > ', artistGroups)
-    const uniqueGroups = artistGroups.reduce((acc, current) => {
-      if (!acc.find((item) => item.groupId === current.groupId)) {
-        acc.push(current.groupId);
-      }
-      return acc;
-    }, [])
-
-    uniqueArtists.forEach(artist => artist.isArtist = true)
-    uniqueGroups.forEach(group => group.isGroup = true)
-    
-    const artists = [...uniqueArtists, ...uniqueGroups]
-    
-    // console.log('common list artists > ', artists)
-
-    res.render('artists/artists', { artists })
+    .then((uniqueGroups => {
+      // console.log('then uniqueGroups > ', uniqueGroups[0].artists)
+      uniqueArtists.forEach(artist => artist.isArtist = true)
+      uniqueGroups.forEach(group => group.isGroup = true)    
+      const artists = [...uniqueArtists, ...uniqueGroups]    
+      res.render('artists/artists', { artists })
+      // res.send('done!')
+    }))
   })
   .catch(next)
-
-
-  // .then(artists => {
-    //   console.log('artists > ', artists)
-    //   res.render('artists/artists', { artists })
-    // })
-    // .catch(next)
   
 }
 

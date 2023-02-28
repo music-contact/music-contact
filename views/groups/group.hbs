@@ -45,6 +45,11 @@
                 <i class="fa fa-twitter-square social-icon" aria-hidden="true"></i>
               </a>
               {{/checkSocial}}
+              {{#checkSocial artistGroup.groupId.socialMedia.spotify}}
+              <a href="{{artistGroup.groupId.socialMedia.spotify}}" target="_blank" style="color: transparent;">
+                <i class="fa fa-spotify social-icon" aria-hidden="true"></i>
+              </a>
+              {{/checkSocial}}
             </div>
             <div class="media-body mb-5 text-white">
               <h4 class="mt-0 mb-4">{{artistGroup.groupId.name}}</h4>
@@ -61,16 +66,8 @@
               </span>
             </li>
             <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">215</h5><small class="text-muted"> <i
+              <h5 class="font-weight-bold mb-0 d-block">{{images.length}}</h5><small class="text-muted"> <i
                   class="fas mr-1"></i>Photos</small>
-            </li>
-            <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted"> <i
-                  class="fas mr-1"></i>Followers</small>
-            </li>
-            <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted"> <i
-                  class="fas mr-1"></i>Following</small>
             </li>
           </ul>
         </div>
@@ -79,6 +76,15 @@
           <div class="p-4 rounded shadow-sm bg-light">
             <p class="font-italic mb-0">{{artistGroup.groupId.description}}</p>
           </div>
+        </div>
+        <div class="px-4 py-3">
+          <h5 class="mb-3">My Songs</h5>
+          <ul>
+          {{#each artistGroup.topTracks as |track|}}
+            <p>{{track.name}}</p>
+            <p><audio controls src="{{track.url}}"></audio></p>
+          {{/each}}
+          </ul>
         </div>
         {{#if images.length }}
         <div class="py-4 px-4">
