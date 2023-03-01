@@ -1,22 +1,27 @@
 {{> header}}
 <div class="about-body">
-  <h1>ABOUT MUSIC-CONTACT</h1>
+  <div class="about-body-width">
+    <h1 class="mt-5">ABOUT MUSIC-CONTACT</h1>
+    <p class="mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore sint cupiditate repellendus, ad officiis ullam? Iure consequuntur officia nostrum. Totam laudantium nobis quae corporis assumenda, itaque optio blanditiis ratione dolore.</p>
 
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore sint cupiditate repellendus, ad officiis ullam? Iure consequuntur officia nostrum. Totam laudantium nobis quae corporis assumenda, itaque optio blanditiis ratione dolore.</p>
-
-  <form action="" method="post">
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input name="name" type="text" class="form-control" id="email">
+    <h1 class="mt-5">CONTACT WITH US</h1>
+    <p class="mt-1 mb-0">Contact with us if you have any issue!</p>
+    <div class="filter-container mt-5">
+      <form action="" method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input name="name" type="text" class="form-control" id="email">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input name="email" type="email" class="form-control" id="email">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="mb-1">Message</label>
+          <textarea name="message" class="form-control" id="message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary-see-detail">Submit</button>
+      </form>
     </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input name="email" type="email" class="form-control" id="email">
-    </div>
-    <div class="mb-3">
-      <label for="message">Message</label>
-      <textarea name="message" class="form-control" id="message"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </div>
 </div>
