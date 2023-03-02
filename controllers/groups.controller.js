@@ -9,58 +9,107 @@ module.exports.list = (req, res, next) => { };
 
 // find({ artistId: { $eq: artist.id}})
 
+// module.exports.detail = (req, res, next) => {
+//   console.log("detail > ", req.params.id);
+//   console.log("detail > ", req.artist?.id);
+
+//   Group.findById(req.params.id)
+//     .then((group) => {
+//       if (group) {
+//         return ArtistGroup.findOne({ artistId: req.artist?.id, groupId: group.id })
+//           .populate("groupId")
+//           .then(artistGroup => {
+//             // console.log('artistGroup > ', artistGroup)
+//             if (!artistGroup) {
+//               artistGroup = {
+//                 artistId: null,
+//                 groupId: group
+//               }
+//             }
+//             return Images.find({ author: { $eq: group.id } })
+//               .then((images) => {
+//                 // console.log('artistGroup after > ', artistGroup)                
+//                 const spotifyId = artistGroup.groupId.socialMedia?.spotify.split('/').pop()
+//                 console.log('spotifyId > ', spotifyId)
+//                 return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
+//                 .then((data) => {
+//                   console.log('data.body > ', data.body)
+//                   artistGroup.topTracks = data.body.tracks.map(track => ({name: track.name, url: track.preview_url}))                
+//                   // res.render('artists/artist', { artist, artistGroups, images })
+//                   // console.log('artistGroup.topTracks >', artistGroup.topTracks)   
+//                   res.render("groups/group", { artistGroup, images });
+//                 })
+
+//               })
+//           })
+//       }
+//     })
+//     .catch(next)
+
+//   //******************* */
+
+//   // ArtistGroup.find({ artistId: req.artist?.id, groupId: req.params.id })
+//   //   .populate("groupId")
+//   //   .then((artistGroups) => {
+//   //     // console.log("group detail artistGroup > ", artistGroup);
+//   //     console.log("group detail > ", artistGroups);
+//   //     const artistGroup = artistGroups[0];
+//   //     return Images.find({ author: { $eq: artistGroup?.groupId?.id } }).then(
+//   //       (images) => {
+//   //         res.render("groups/group", { artistGroup, images });
+//   //       }
+//   //     );
+//   //   })
+//   //   .catch(next);
+// };
+
 module.exports.detail = (req, res, next) => {
-  console.log("detail > ", req.params.id);
-  console.log("detail > ", req.artist?.id);
+  // console.log("detail > ", req.params.id);
+  // console.log("detail > ", req.artist?.id);
+
+  function getTracks(group) {
+    if (group.socialMedia?.spotify) {
+      const spotifyId = group.socialMedia.spotify.split('/').pop()
+      return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
+        .then(data => {
+          group.topTracks = data.body.tracks.map(track => ({ name: track.name, url: track.preview_url }))
+          return group
+        })
+    }
+
+    return Promise.resolve(group)
+  }
 
   Group.findById(req.params.id)
-    .then((group) => {
-      if (group) {
-        return ArtistGroup.findOne({ artistId: req.artist?.id, groupId: group.id })
-          .populate("groupId")
-          .then(artistGroup => {
-            // console.log('artistGroup > ', artistGroup)
-            if (!artistGroup) {
-              artistGroup = {
-                artistId: null,
-                groupId: group
-              }
-            }
-            return Images.find({ author: { $eq: group.id } })
-              .then((images) => {
-                // console.log('artistGroup after > ', artistGroup)                
-                const spotifyId = artistGroup.groupId.socialMedia?.spotify.split('/').pop()
-                console.log('spotifyId > ', spotifyId)
-                return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
-                .then((data) => {
-                  console.log('data.body > ', data.body)
-                  artistGroup.topTracks = data.body.tracks.map(track => ({name: track.name, url: track.preview_url}))                
-                  // res.render('artists/artist', { artist, artistGroups, images })
-                  // console.log('artistGroup.topTracks >', artistGroup.topTracks)   
-                  res.render("groups/group", { artistGroup, images });
-                })
-
-              })
-          })
+    .populate({
+      path: 'artistOwners',
+      match: {
+        artistId: { $eq: req.artist?.id }
+      },
+      populate: {
+        path: 'artistId'
       }
     })
+    .populate({
+      path: 'artists',
+      populate: {
+        path: 'artistId'
+      }
+    })
+    .populate({
+      path: 'images'
+    })
+    .then(group => {
+      // console.log('group > ', group.toJSON({ virtuals: true }))
+      // console.log('req.artist?.id > ', req.artist?.id)
+      // console.log('group.artists[0]?.artistId > ', group.artists[0]?.artistId)
+      return getTracks(group).then(group => {
+        // res.send('done!')
+        console.log('group > ', group.toJSON({ virtuals: true }))
+        res.render("groups/group", { group });
+      })
+    })
     .catch(next)
-
-  //******************* */
-
-  // ArtistGroup.find({ artistId: req.artist?.id, groupId: req.params.id })
-  //   .populate("groupId")
-  //   .then((artistGroups) => {
-  //     // console.log("group detail artistGroup > ", artistGroup);
-  //     console.log("group detail > ", artistGroups);
-  //     const artistGroup = artistGroups[0];
-  //     return Images.find({ author: { $eq: artistGroup?.groupId?.id } }).then(
-  //       (images) => {
-  //         res.render("groups/group", { artistGroup, images });
-  //       }
-  //     );
-  //   })
-  //   .catch(next);
 };
 
 module.exports.new = (req, res, next) => {

@@ -40,7 +40,21 @@ groupSchema.virtual('artists', {
   ref: 'ArtistGroup',
   localField: '_id',
   foreignField: 'groupId',
-  // justOne: false
+  justOne: false
+})
+
+groupSchema.virtual('artistOwners', {
+  ref: 'ArtistGroup',
+  localField: '_id',
+  foreignField: 'groupId',
+  justOne: false
+})
+
+groupSchema.virtual('images', {
+  ref: 'Image',
+  localField: '_id',
+  foreignField: 'author',
+  justOne: false
 })
 
 const Group = mongoose.model('Group', groupSchema)

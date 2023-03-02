@@ -65,7 +65,7 @@
               </span>
             </li>
             <li class="list-inline-item">
-              <h5 class="font-weight-bold mb-0 d-block">{{images.length}}</h5><small class="text-muted"> <i
+              <h5 class="font-weight-bold mb-0 d-block">{{artist.images.length}}</h5><small class="text-muted"> <i
                   class="fas mr-1"></i>Photos</small>
             </li>
           </ul>
@@ -76,6 +76,7 @@
             <p class="font-italic mb-0">{{artist.description}}</p>
           </div>
         </div>
+        {{#if artist.topTracks.length}}
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
           <ul>
@@ -85,11 +86,12 @@
           {{/each}}
           </ul>
         </div>
-        {{#if artistGroups.length}}
+        {{/if}}
+        {{#if artist.groups.length}}
         <div class="px-4 py-3">
-          <h5 class="mb-3">My artistGroups</h5>
+          <h5 class="mb-3">My groups</h5>
           <div class="row">
-            {{#each artistGroups as |group|}}
+            {{#each artist.groups as |group|}}
             <div class="col-lg-6 mb-2 pr-lg-1">
               {{!-- <img
                 src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
@@ -124,13 +126,13 @@
           </div>
         </div>
         {{/if}}
-        {{#if images.length}}
+        {{#if artist.images.length}}
         <div class="py-4 px-4">
           <div class="d-flex align-items-center justify-content-between mb-3">
             <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
           </div>
           <div class="row">            
-          {{#each images as |image|}}
+          {{#each artist.images as |image|}}
             <div class="col-lg-6 mb-2 pr-lg-1"><img
                 src="{{image.url}}"
                 alt="" class="img-fluid rounded shadow-sm">
@@ -153,3 +155,5 @@
     </div>
   </div>
 </div>
+
+<script src="/scripts/audio.script.js"></script>

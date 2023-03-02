@@ -33,7 +33,29 @@
 
 <body class="artists-body">
   <div class="filter-container">
-    <input type="text" placeholder="Search..." class="filter-input">
+    <form>
+      <input name="search" type="text" placeholder="Search..." class="filter-input">
+    </form>
+    <div class="dropdowns-container">
+      <div class="dropdown">
+        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{#if currentFilter.sort}}{{currentFilter.sort}}endant{{else}}Sort by Asc/Desc{{/if}}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a id="sortAsc" class="filter dropdown-item" href="/artists?sort=asc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}">Ascendant</a></li>
+          <li><a id="sortDesc" class="filter dropdown-item" href="/artists?sort=desc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}">Descendant</a></li>
+        </ul>   
+      </div>
+      <div class="dropdown mx-3">
+        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{#if currentFilter.type}}{{currentFilter.type}}{{else}}Sort By Artists/Groups{{/if}}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a id="typeArtist" class="filter dropdown-item" href="/artists?type=artist">Artists</a></li>
+          <li><a id="typeGroup" class="filter dropdown-item" href="/artists?type=group">Groups</a></li>
+        </ul>   
+      </div>
+    </div>
   </div>
   <div class="team-boxed">
     <div class="container">

@@ -17,6 +17,10 @@ app.use(logger('dev'))
 // Configure static files
 app.use(express.static(`${__dirname}/public`))
 
+// Configure Favicon
+const favicon = require("serve-favicon");
+app.use(favicon(`${__dirname}/public/favicon.ico`));
+
 // Configure cookie of session
 const { session, loadSessionArtist } = require('./config/session.config')
 app.use(session)

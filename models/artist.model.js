@@ -51,7 +51,14 @@ artistSchema.virtual('groups', {
   ref: 'ArtistGroup',
   localField: '_id',
   foreignField: 'artistId',
-  // justOne: false
+  justOne: false
+})
+
+artistSchema.virtual('images', {
+  ref: 'Image',
+  localField: '_id',
+  foreignField: 'author',
+  justOne: false
 })
 
 artistSchema.pre('save', function(next){

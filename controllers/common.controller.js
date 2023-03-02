@@ -29,8 +29,29 @@ module.exports.list = (req, res, next) => {
       // console.log('then uniqueGroups > ', uniqueGroups[0].artists)
       uniqueArtists.forEach(artist => artist.isArtist = true)
       uniqueGroups.forEach(group => group.isGroup = true)    
-      const artists = [...uniqueArtists, ...uniqueGroups]    
-      res.render('artists/artists', { artists })
+      const artists = [...uniqueArtists, ...uniqueGroups]   
+      // console.log('artists > ', artists) 
+      let filteredArtists = artists
+      if (req.query.type === 'artist') {
+        filteredArtists = artists.filter(artist => artist.isArtist)
+      } else if (req.query.type === 'group') {
+        filteredArtists = artists.filter(artist => artist.isGroup)
+      }
+      filteredArtists.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        if (req.query.sort === 'desc') {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        } else {
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        }
+      });
+      res.locals.currentFilter = {
+        sort: req.query.sort,
+        type: req.query.type
+      }
+      console.log('currentFilter > ', res.locals.currentFilter)
+      res.render('artists/artists', { artists: filteredArtists })
       // res.send('done!')
     }))
   })

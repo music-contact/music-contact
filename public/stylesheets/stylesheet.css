@@ -44,6 +44,12 @@ h1 {
   margin-right: 10px;
 }
 
+.dropdowns-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .about-body {
   width: 100%;
   height: 100%;
