@@ -73,7 +73,7 @@ h1 {
   justify-content: space-evenly;
 }
 
-.login-body, .register-body {
+.login-body, .register-body, .group-edit-body {
   background: #3042e0;
   background: linear-gradient(to right, #2fcf72, #2da4b9);
   min-height: 100vh;

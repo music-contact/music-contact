@@ -64,7 +64,7 @@ module.exports.list = (req, res, next) => { };
 // };
 
 module.exports.detail = (req, res, next) => {
-  // console.log("detail > ", req.params.id);
+  console.log("group detail > ", req.params.id);
   // console.log("detail > ", req.artist?.id);
 
   function getTracks(group) {
@@ -105,7 +105,7 @@ module.exports.detail = (req, res, next) => {
       // console.log('group.artists[0]?.artistId > ', group.artists[0]?.artistId)
       return getTracks(group).then(group => {
         // res.send('done!')
-        console.log('group > ', group.toJSON({ virtuals: true }))
+        // console.log('group > ', group.toJSON({ virtuals: true }))
         res.render("groups/group", { group });
       })
     })
@@ -118,7 +118,7 @@ module.exports.new = (req, res, next) => {
 };
 
 module.exports.doNew = (req, res, next) => {
-  console.log('groups doNew req.files > ', req.files)
+  // console.log('groups doNew req.files > ', req.files)
   if (req.files.length === 1) {
     req.body.image = req.files[0].path;
   }
@@ -126,8 +126,13 @@ module.exports.doNew = (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     description: req.body.description,
-    image: req.body.image
+    image: req.body.image,
   };
+
+  delete req.body.role;
+  newGroup.role = "admin"
+
+  console.log('group doNew > ', newGroup )
   Group.findOne({ email: newGroup.email })
     .then((group) => {
       if (!group) {
@@ -139,6 +144,9 @@ module.exports.doNew = (req, res, next) => {
             res.redirect(`/groups/${group.id}`);
           });
         });
+      } else {
+        console.log('email already exists!')
+        res.render('groups/group-profile', {})
       }
     })
     .catch((error) => {

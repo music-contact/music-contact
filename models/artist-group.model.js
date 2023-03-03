@@ -10,6 +10,11 @@ const artistGroupSchema = new Schema({
   groupId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Group'
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'member'],
+    //default: 'member'
   }
 })
 

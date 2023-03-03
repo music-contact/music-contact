@@ -34,26 +34,33 @@
 <body class="artists-body">
   <div class="filter-container">
     <form>
-      <input name="search" type="text" placeholder="Search..." class="filter-input">
+      <input id="search" value="{{query.search}}" data="{{query.search}}" name="search" type="text" placeholder="Search..." class="filter-input">
     </form>
     <div class="dropdowns-container">
       <div class="dropdown">
-        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{#if currentFilter.sort}}{{currentFilter.sort}}endant{{else}}Sort by Asc/Desc{{/if}}
-        </button>
-        <ul class="dropdown-menu">
-          <li><a id="sortAsc" class="filter dropdown-item" href="/artists?sort=asc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}">Ascendant</a></li>
-          <li><a id="sortDesc" class="filter dropdown-item" href="/artists?sort=desc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}">Descendant</a></li>
-        </ul>   
-      </div>
-      <div class="dropdown mx-3">
-        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
+          type="button" data-bs-toggle="dropdown" aria-expanded="false">
           {{#if currentFilter.type}}{{currentFilter.type}}{{else}}Sort By Artists/Groups{{/if}}
         </button>
-        <ul class="dropdown-menu">
+        <ul id="type" class="dropdown-menu" data="{{query.type}}">
           <li><a id="typeArtist" class="filter dropdown-item" href="/artists?type=artist">Artists</a></li>
           <li><a id="typeGroup" class="filter dropdown-item" href="/artists?type=group">Groups</a></li>
-        </ul>   
+        </ul>
+      </div>
+      <div class="dropdown mx-3">
+        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
+          type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{#if currentFilter.sort}}{{currentFilter.sort}}endant{{else}}Ascendant{{/if}}
+        </button>
+        <ul id="sort" class="dropdown-menu" data="{{query.sort}}">
+          <li><a id="sortAsc" class="filter dropdown-item"
+              href="/artists?sort=asc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Ascendant</a></li>
+          <li><a id="sortDesc" class="filter dropdown-item"
+              href="/artists?sort=desc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Descendant</a></li>
+        </ul>
+      </div>
+      <div class="mx-3">
+        <a href="/artists" class="btn btn-outline-light">Clear Filters</a>
       </div>
     </div>
   </div>
@@ -61,49 +68,147 @@
     <div class="container">
       <div class="row people">
         {{#each artists as |artist|}}
-          <div class="col-md-6 col-lg-4 item">
-              <div class="box"><img class="artists-image" src="{{#checkImage artist.image}}{{artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}">
-                  <h3 class="name">{{artist.name}}</h3>
-                  {{#if artist.isArtist}}
-                  <p class="title">Artist</p>
-                    {{#each artist.groups as |group|}}
-                    <li class="list-inline-item">
-                      <span class="badge text-bg-warning">
-                        {{group.groupId.name}}
-                      </span>
-                    </li>
-                    {{/each}}
-                  {{else}}
-                    <p class="title">Group</p>
-                    {{#each artist.artists as |person|}}
-                    <li class="list-inline-item">
-                      <span class="badge text-bg-warning">
-                        {{person.artistId.name}}
-                      </span>
-                    </li>
-                    {{/each}}
-                  {{/if}}
-                  <p class="description">{{artist.description}}</p>
-                  <div class="social">
-                    {{#checkSocial artist.socialMedia.facebook}}
-                    <a href="{{artist.socialMedia.facebook}}" target="_blank"><i class="fa fa-facebook-official"></i></a>
-                    {{/checkSocial}}
-                    {{#checkSocial artist.socialMedia.twitter}}
-                    <a href="{{artist.socialMedia.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
-                    {{/checkSocial}}
-                    {{#checkSocial artist.socialMedia.instagram}}
-                    <a href="{{artist.socialMedia.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a>
-                    {{/checkSocial}}
-                    {{#checkSocial artist.socialMedia.spotify}}
-                    <a href="{{artist.socialMedia.spotify}}" target="_blank"><i class="fa fa-spotify"></i></a>
-                    {{/checkSocial}}
-                  </div>
-                  <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
-                  class="btn btn-primary-see-detail mt-3">See details</a>
-              </div>
+        <div class="col-md-6 col-lg-4 item">
+          <div class="box"><img class="artists-image"
+              src="{{#checkImage artist.image}}{{artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}">
+            <h3 class="name">{{artist.name}}</h3>
+            {{#if artist.isArtist}}
+            <p class="title">Artist</p>
+            {{#each artist.groups as |group|}}
+            <li class="list-inline-item">
+              <a href="/groups/{{group.groupId.id}}">
+                <span class="badge text-bg-warning">
+                  {{group.groupId.name}}
+                </span>
+              </a>
+            </li>
+            {{/each}}
+            {{else}}
+            <p class="title">Group</p>
+            {{#each artist.artists as |person|}}
+            <li class="list-inline-item">
+              <a href="/artists/{{person.artistId.id}}">
+                <span class="badge text-bg-warning">
+                  {{person.artistId.name}}
+                </span>
+              </a>
+            </li>
+            {{/each}}
+            {{/if}}
+            <p class="description">{{artist.description}}</p>
+            <div class="social">
+              {{#checkSocial artist.socialMedia.facebook}}
+              <a href="{{artist.socialMedia.facebook}}" target="_blank"><i class="fa fa-facebook-official"></i></a>
+              {{/checkSocial}}
+              {{#checkSocial artist.socialMedia.twitter}}
+              <a href="{{artist.socialMedia.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
+              {{/checkSocial}}
+              {{#checkSocial artist.socialMedia.instagram}}
+              <a href="{{artist.socialMedia.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a>
+              {{/checkSocial}}
+              {{#checkSocial artist.socialMedia.spotify}}
+              <a href="{{artist.socialMedia.spotify}}" target="_blank"><i class="fa fa-spotify"></i></a>
+              {{/checkSocial}}
+            </div>
+            <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
+              class="btn btn-primary-see-detail mt-3">See details</a>
           </div>
+        </div>
         {{/each}}
       </div>
     </div>
   </div>
 </body>
+
+<script>
+  /*
+  */
+  function debounce(callback, wait) {
+    // console.log(...arguments)
+    let timeout
+    return (...args) => {
+      clearTimeout(timeout)
+      // console.log(args)
+      timeout = setTimeout(() => {
+        callback(this, args)
+      }, wait)
+    }
+  }
+
+  /*
+  */
+  document.getElementById('search').addEventListener('keyup', debounce((scope, ev) => { // comportamiento similar!? al middleware configurable de express...
+    let url
+    const href = window.location.href
+    const path = window.location.href.split('?')[0]
+    console.log(path)
+    const search = document.getElementById('search').getAttribute('data')
+    const sort = document.getElementById('sort').getAttribute('data')
+    const type = document.getElementById('type').getAttribute('data')
+
+    if (!href.includes('?')) {
+      url = `${path}?search=${ev[0].target.value}`
+    } else {
+      url = `${href.split('&search')[0]}&search=${ev[0].target.value}`
+    }
+    console.log('url > ', url)
+    // window.location.href = window.location.href
+    window.location.replace(url);
+  }, 1000))
+
+  
+
+  // PRUEBAS PARA ENTENDER...
+
+  /*
+  function sample() {
+    const def = 'hi!'
+    console.log(def)
+    return () => {
+      console.log('bye but once was... ', def)
+      return 0
+    }
+  }
+
+  const executable = sample()
+  console.log(executable)
+
+  setTimeout(() => {
+    executable()
+  }, 1000)
+  */
+
+  /*
+  function sample() {
+    const def = 'hi!'
+    console.log(def)
+    return () => {
+      console.log('bye but once was... ', def)
+    }
+  }
+
+  sample()()
+
+  document.getElementById('search').addEventListener('keyup',
+    sample()
+  )
+  */
+
+
+
+  /*
+  document.getElementById('search').addEventListener('keyup',
+    function sample(ev) {
+      console.log('hi')
+    }
+  )
+  */
+
+  /*
+  document.getElementById('search').addEventListener('keyup',
+    (ev) => {
+      console.log('hi')
+    }
+  )
+  */
+</script>

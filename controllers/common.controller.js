@@ -32,10 +32,14 @@ module.exports.list = (req, res, next) => {
       const artists = [...uniqueArtists, ...uniqueGroups]   
       // console.log('artists > ', artists) 
       let filteredArtists = artists
+      console.log(req.query.search)
+      if(req.query.search) {
+        filteredArtists = artists.filter(artist => artist.name.startsWith(req.query.search))
+      }
       if (req.query.type === 'artist') {
-        filteredArtists = artists.filter(artist => artist.isArtist)
+        filteredArtists = filteredArtists.filter(artist => artist.isArtist)
       } else if (req.query.type === 'group') {
-        filteredArtists = artists.filter(artist => artist.isGroup)
+        filteredArtists = filteredArtists.filter(artist => artist.isGroup)
       }
       filteredArtists.sort(function(a,b){
         // Turn your strings into dates, and then subtract them
@@ -48,10 +52,12 @@ module.exports.list = (req, res, next) => {
       });
       res.locals.currentFilter = {
         sort: req.query.sort,
-        type: req.query.type
+        type: req.query.type,
+        search: req.query.search
       }
-      console.log('currentFilter > ', res.locals.currentFilter)
-      res.render('artists/artists', { artists: filteredArtists })
+      // console.log('currentFilter > ', res.locals.currentFilter)
+      console.log('filteredArtists > ', filteredArtists)
+      res.render('artists/artists', { artists: filteredArtists, query: req.query })
       // res.send('done!')
     }))
   })

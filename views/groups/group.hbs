@@ -16,15 +16,17 @@
                 style="color: white !important;">Add Photo</a>
               {{/checkOwner}}
               {{#checkOwner group.artistOwners.0.artistId.id currentArtist.id}}
-                  <form action="/groups/{{../group.artistOwners.0.artistId.id}}/delete" method="post">
-                    <button type="submit" class="btn btn-danger btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                        Delete group
-                    </button>
-                  </form>
-                  {{/checkOwner}}
+              <form action="/groups/{{../group.artistOwners.0.artistId.id}}/delete" method="post">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                  </svg>
+                  Delete group
+                </button>
+              </form>
+              {{/checkOwner}}
               {{#checkSocial group.socialMedia.facebook}}
               <a href="{{group.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                 <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
@@ -75,7 +77,15 @@
           <h5 class="mb-0">Members</h5>
           <div class="p-4 rounded shadow-sm bg-light">
             {{#each group.artists as |artist| }}
-              <a href="/artists/{{artist.artistId.id}}"><p class="font-italic mb-0">{{artist.artistId.name}}</p></a>
+            <a href="/artists/{{artist.artistId.id}}">
+              <p class="font-italic mb-0">
+                {{#checkOwner ../group.artistOwners.0.artistId.id artist.artistId.id}}
+                  You*
+                {{else}}
+                  {{artist.artistId.name}}
+                {{/checkOwner}}
+              </p>
+            </a>
             {{/each}}
           </div>
         </div>
@@ -89,10 +99,10 @@
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
           <ul>
-          {{#each group.topTracks as |track|}}
+            {{#each group.topTracks as |track|}}
             <p>{{track.name}}</p>
             <p><audio controls src="{{track.url}}"></audio></p>
-          {{/each}}
+            {{/each}}
           </ul>
         </div>
         {{/if}}
