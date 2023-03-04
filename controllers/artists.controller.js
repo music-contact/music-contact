@@ -55,7 +55,7 @@ module.exports.detail = (req, res, next) => {
     })
     .then(artist => {
       return getTracks(artist).then((artist) => {
-        console.log('then getTracks > ', artist.toJSON({ virtuals: true }))
+        // console.log('then getTracks > ', artist.toJSON({ virtuals: true }))
         res.render('artists/artist', { artist })
       })
     })

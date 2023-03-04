@@ -8,24 +8,28 @@
             <div class="profile mr-3">
               <img src="{{group.image}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
               {{#checkOwner group.artistOwners.0.artistId.id currentArtist.id}}
-              <a href="/groups/{{../group.artistOwners.0.artistId.id}}/edit" class="btn btn-sm btn-block"
-                style="color: white !important;">Edit profile</a>
+                {{#if ../group.artistOwners.0.role}}
+                <a href="/groups/{{../../group.id}}/edit" class="btn btn-sm btn-block"
+                  style="color: white !important;">Edit profile</a>
+                {{/if}}
               {{/checkOwner}}
               {{#checkOwner group.artistOwners.0.artistId.id currentArtist.id}}
-              <a href="/images/{{../group.artistOwners.0.artistId.id}}/new" class="btn btn-sm btn-block"
+              <a href="/images/{{../group.id}}/new" class="btn btn-sm btn-block"
                 style="color: white !important;">Add Photo</a>
               {{/checkOwner}}
               {{#checkOwner group.artistOwners.0.artistId.id currentArtist.id}}
-              <form action="/groups/{{../group.artistOwners.0.artistId.id}}/delete" method="post">
-                <button type="submit" class="btn btn-danger btn-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-trash-fill" viewBox="0 0 16 16">
-                    <path
-                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                  </svg>
-                  Delete group
-                </button>
-              </form>
+                {{#if ../group.artistOwners.0.role}}
+                <form action="/groups/{{../../group.id}}/delete" method="post">
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                    Delete group
+                  </button>
+                </form>
+                {{/if}}
               {{/checkOwner}}
               {{#checkSocial group.socialMedia.facebook}}
               <a href="{{group.socialMedia.facebook}}" target="_blank" style="color: transparent;">

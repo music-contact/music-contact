@@ -13,8 +13,8 @@ const artistGroupSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'member'],
-    //default: 'member'
+    enum: ['admin', null],
+    default: null
   }
 })
 
@@ -22,7 +22,7 @@ artistGroupSchema.virtual('artists', {
   ref: 'Artist',
   localField: 'artistId',
   foreignField: '_id',
-  // justOne: false
+  justOne: false
 })
 
 const ArtistGroup = mongoose.model('ArtistGroup', artistGroupSchema)

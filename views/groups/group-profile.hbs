@@ -6,7 +6,8 @@
   </div>
   {{/if}}
 
-  <form action="{{#if currentGroup}} /groups/{{currentGroup.id}} {{else}} /groups/new{{/if}}" method="post" enctype="multipart/form-data">
+  <form action="{{#if currentGroup}} /groups/{{currentGroup.id}} {{else}} /groups/new{{/if}}" method="post"
+    enctype="multipart/form-data">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input name="name" value="{{currentGroup.name}}" type="text"
@@ -29,9 +30,24 @@
     </div>
     <div class="mb-3">
       <label for="descriptionTextarea">Description</label>
-      <textarea name="description" class="form-control" placeholder="" id="descriptionTextarea">
-        {{currentGroup.description}}
-      </textarea>
+      <textarea name="description" class="form-control" placeholder=""
+        id="descriptionTextarea">{{currentGroup.description}}</textarea>
+    </div>
+    <hr>
+    <div class="mb-3">
+      <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+        {{#each candidates as |candidate|}}
+        <input type="checkbox" name="candidate" value="{{candidate.id}}" class="form-control btn-check" id="{{candidate.email}}" autocomplete="off">
+        <label class="btn btn-outline-primary" for="{{candidate.email}}">{{candidate.email}}</label>
+        {{/each}}
+      </div>
+      {{!-- <label for="candidates">Candidates</label>
+      <select id="candidates" name="candidates" class="form-select" multiple>
+        {{#each candidates as |candidate|}}
+        <option value="{{candidate.email}}">{{candidate.email}}</option>
+        <option value="{{candidate.email}}_1">{{candidate.email}}</option>
+        {{/each}}
+      </select> --}}
     </div>
     <hr>
     <div class="input-group mb-3">
