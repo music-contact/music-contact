@@ -65,6 +65,38 @@ h1 {
   align-items: center;
 }
 
+.profile-form {
+  width: 90vw !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+}
+
+.profile-form .col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.profile-form hr {
+  color: white;
+  opacity: .5;
+}
+
+.profile-form label {
+  color: white;
+  font-size: large;
+}
+
+.profile-form .btn-group label, .profile-form label[for="image"] {
+  font-size: 1rem;
+}
+
+.profile-form .btn-group label {
+  width: 50%;
+}
+
 .about-body form, .register-body form, .login-body form {
   width: 500px;
   display: flex;
@@ -189,6 +221,8 @@ h1 {
   padding:20px 0;
   display: flex;
   width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .team-boxed .item {
@@ -204,6 +238,11 @@ h1 {
   border-radius: 25px;
   flex: 1;
   padding: 16px;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .team-boxed .item .name {
@@ -235,12 +274,8 @@ h1 {
   opacity:1;
 }
 
-/*.team-boxed .rounded-circle {
-  height: 105px;
-  width: 150px;
-}*/
-
 .team-boxed .artists-image {
+  max-height: 200px;
   max-width: 300px;
   height: auto;
   border-radius: 10px;
@@ -259,16 +294,29 @@ h1 {
   padding: 2rem;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.filter-container form {
+  margin: 0;
 }
 
 .filter-input {
-  width: 100%;
+  width: 450px;
   height: 40px;
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
   font-size: 1rem;
+}
+
+.music-contact-image-login {
+  width: 200px;
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
 .btn-primary-see-detail {
@@ -279,6 +327,40 @@ h1 {
   --bs-btn-hover-bg: #00b477;
   --bs-btn-hover-border-color: #00b477;
 }
+
+.artist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-buttons {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+}
+
+.img-name-artist-profile {
+  display: flex;
+}
+
+.artist-name-profile {
+  padding-top: 20px;
+  font-size: 1.9rem;
+  margin-top: 0;
+  padding-left: 15px;
+}
+
+.socials-artist-profile {
+  margin-top: 15px;
+  margin-bottom: 60px
+}
+
+.socials-artist-profile a {
+  margin-right: 15px;
+  font-size: 1.2rem
+}
+
 
 @import url('https://fonts.googleapis.com/css?family=Audiowide&display=swap');
 

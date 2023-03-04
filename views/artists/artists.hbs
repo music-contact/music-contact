@@ -33,35 +33,35 @@
 
 <body class="artists-body">
   <div class="filter-container">
-    <form>
-      <input id="search" value="{{query.search}}" data="{{query.search}}" name="search" type="text" placeholder="Search..." class="filter-input">
-    </form>
-    <div class="dropdowns-container">
-      <div class="dropdown">
-        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
-          type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{#if currentFilter.type}}{{currentFilter.type}}{{else}}Sort By Artists/Groups{{/if}}
-        </button>
-        <ul id="type" class="dropdown-menu" data="{{query.type}}">
-          <li><a id="typeArtist" class="filter dropdown-item" href="/artists?type=artist">Artists</a></li>
-          <li><a id="typeGroup" class="filter dropdown-item" href="/artists?type=group">Groups</a></li>
-        </ul>
-      </div>
-      <div class="dropdown mx-3">
-        <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
-          type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {{#if currentFilter.sort}}{{currentFilter.sort}}endant{{else}}Ascendant{{/if}}
-        </button>
-        <ul id="sort" class="dropdown-menu" data="{{query.sort}}">
-          <li><a id="sortAsc" class="filter dropdown-item"
-              href="/artists?sort=asc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Ascendant</a></li>
-          <li><a id="sortDesc" class="filter dropdown-item"
-              href="/artists?sort=desc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Descendant</a></li>
-        </ul>
-      </div>
-      <div class="mx-3">
-        <a href="/artists" class="btn btn-outline-light">Clear Filters</a>
-      </div>
+    <div>
+      <form>
+        <input id="search" value="{{query.search}}" data="{{query.search}}" name="search" type="text" placeholder="Search..." class="filter-input">
+      </form>
+    </div>
+    <div class="dropdown mx-3">
+      <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{#if currentFilter.type}}{{currentFilter.type}}{{else}}Sort By Artists/Groups{{/if}}
+      </button>
+      <ul id="type" class="dropdown-menu" data="{{query.type}}">
+        <li><a id="typeArtist" class="filter dropdown-item" href="/artists?type=artist">Artists</a></li>
+        <li><a id="typeGroup" class="filter dropdown-item" href="/artists?type=group">Groups</a></li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-outline-light dropdown-toggle" style="text-transform: capitalize !important;"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{#if currentFilter.sort}}{{currentFilter.sort}}endant{{else}}Ascendant{{/if}}
+      </button>
+      <ul id="sort" class="dropdown-menu" data="{{query.sort}}">
+        <li><a id="sortAsc" class="filter dropdown-item"
+            href="/artists?sort=asc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Ascendant</a></li>
+        <li><a id="sortDesc" class="filter dropdown-item"
+            href="/artists?sort=desc{{#if currentFilter.type}}&type={{currentFilter.type}}{{/if}}{{#if currentFilter.search}}&search={{currentFilter.search}}{{/if}}">Descendant</a></li>
+      </ul>
+    </div>
+    <div class="mx-3">
+      <a href="/artists" class="btn btn-outline-light">Clear Filters</a>
     </div>
   </div>
   <div class="team-boxed">
