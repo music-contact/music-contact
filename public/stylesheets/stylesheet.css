@@ -168,9 +168,23 @@ h1 {
   overflow-x:hidden;
 }
 
-.artist-bar-detail{
+.artist-group-bar-detail{
   display: flex;
   align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.artist-group-bar-detail span {
+  font-size: 0.8rem;
+}
+
+.photos-count {
+  margin-left: 20px;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
 }
 
 .social-icon {
@@ -290,7 +304,7 @@ h1 {
 }
 
 .filter-container {
-  margin: 20px 310px;
+  margin: 20px 0;
   padding: 2rem;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
@@ -328,7 +342,7 @@ h1 {
   --bs-btn-hover-border-color: #00b477;
 }
 
-.artist-header {
+.artist-group-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -340,23 +354,23 @@ h1 {
   min-width: 90px;
 }
 
-.img-name-artist-profile {
+.img-name-artist-group-profile {
   display: flex;
 }
 
-.artist-name-profile {
+.artist-group-name-profile {
   padding-top: 20px;
   font-size: 1.9rem;
   margin-top: 0;
   padding-left: 15px;
 }
 
-.socials-artist-profile {
+.socials-artist-group-profile {
   margin-top: 15px;
   margin-bottom: 60px
 }
 
-.socials-artist-profile a {
+.socials-artist-group-profile a {
   margin-right: 15px;
   font-size: 1.2rem
 }
@@ -531,4 +545,11 @@ h1 {
   100%  {
     filter: hue-rotate(0deg);
   }
+}
+
+#twitter:not(:placeholder-shown)+span {
+  background-color:  #1d9bf0!important;
+}
+#twitter:placeholder-shown+span {
+  background-color:  #e9ecef!important;
 }

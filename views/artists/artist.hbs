@@ -6,10 +6,10 @@
         <div class="px-4 pt-0 pb-4 cover">
           <div class="media align-items-end profile-head">
             <div class="profile mr-3">
-              <div class="artist-header">
-                <div class="img-name-artist-profile">
-                  <img src="{{#checkImage artist.image}}{{artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
-                  <h4 class="media-body text-white artist-name-profile">{{artist.name}}</h4>
+              <div class="artist-group-header">
+                <div class="img-name-artist-group-profile">
+                  <img src="{{#checkImage artist.image}}{{../artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                  <h4 class="media-body text-white artist-group-name-profile">{{artist.name}}</h4>
                 </div>
                 <div class="edit-buttons">
                   {{#checkOwner artist.id currentArtist.id}}
@@ -24,7 +24,7 @@
                   {{/checkOwner}}
                 </div>
               </div>
-              <div class="socials-artist-profile">
+              <div class="socials-artist-group-profile">
                 {{#checkSocial artist.socialMedia.facebook}}
                 <a href="{{../artist.socialMedia.facebook}}" target="_blank" style="color: transparent;">
                   <i class="fa fa-facebook-official social-icon" aria-hidden="true"></i>
@@ -54,8 +54,8 @@
             </div>
           </div>
         </div>
-        <div class="bg-light p-4 d-flex justify-content-end text-center">
-          <ul class="list-inline mb-0 artist-bar-detail">
+        <div class="bg-light p-4">
+          <ul class="list-inline mb-0 artist-group-bar-detail">
             <li class="list-inline-item">
               <span
                 class="badge {{#checkStatus artist.forActing}} text-bg-warning {{else}} text-bg-danger {{/checkStatus}}">
@@ -69,7 +69,7 @@
                 {{/checkStatus}}
               </span>
             </li>
-            <li class="list-inline-item">
+            <li class="list-inline-item photos-count">
               <h5 class="font-weight-bold mb-0 d-block">{{artist.images.length}}</h5><small class="text-muted"> <i
                   class="fas mr-1"></i>Photos</small>
             </li>
@@ -98,19 +98,12 @@
           <div class="row">
             {{#each artist.groups as |group|}}
             <div class="col-lg-6 mb-2 pr-lg-1">
-              {{!-- <img
-                src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-                alt="" class="img-fluid rounded shadow-sm">
-              <div>{{group.groupId.name}}</div> --}}
               <div class="card">
                 <img
                   src="https://images.unsplash.com/photo-1516214104703-d870798883c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
                   alt="" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title">{{group.groupId.name}}</h5>
-                  {{!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut eum similique
-                    repellat a laborum, rerum voluptates ipsam eos quo tempore iusto dolore modi dolorum in pariatur.
-                    Incidunt repellendus praesentium quae!</p> --}}
                   <a href="/groups/{{group.groupId.id}}" class="btn btn-outline-success btn-sm">Go to group</a>
                   {{#checkOwner ../artist.id ../currentArtist.id}}
                   <form action="/groups/{{group.groupId.id}}/delete" method="post">
@@ -122,10 +115,8 @@
                     </button>
                   </form>
                   {{/checkOwner}}
-                  {{!--<a href="" class="btn btn-outline-danger btn-sm"><i class="fa fa-heart"></i></a>--}}
                 </div>
               </div>
-
             </div>
             {{/each}}
           </div>
@@ -137,8 +128,30 @@
             <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
           </div>
           <div class="row">            
-          {{#each artist.images as |image|}}
-            <div class="col-lg-6 mb-2 pr-lg-1"><img
+          
+            <div id="carouselExampleIndicators" class="carousel slide">
+              <div class="carousel-indicators">
+                {{#each numImages as |num|}}
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{num}}" class="{{#if num}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
+                {{/each}}
+              </div> 
+              <div class="carousel-inner">
+              {{#each top3Images as |image|}}
+                <div class="carousel-item {{#if image.index}}{{else}}active{{/if}}">
+                  <img src="{{image._doc.url}}" class="d-block w-100" alt="...">
+                </div>
+              {{/each}}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>  
+            <!--<div class="col-lg-6 mb-2 pr-lg-1"><img
                 src="{{image.url}}"
                 alt="" class="img-fluid rounded shadow-sm">
             </div>
@@ -151,8 +164,7 @@
                   Delete
               </button>
             </form>
-            {{/checkOwner}}
-          {{/each}}
+            {{/checkOwner}}-->
           </div>
         </div>
         {{/if}}

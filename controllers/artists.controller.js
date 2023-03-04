@@ -56,7 +56,12 @@ module.exports.detail = (req, res, next) => {
     .then(artist => {
       return getTracks(artist).then((artist) => {
         // console.log('then getTracks > ', artist.toJSON({ virtuals: true }))
-        res.render('artists/artist', { artist })
+        console.log('artist.images.slice(0,3) > ', artist.images.slice(0,3))
+        const top3Images = artist.images.slice(0,3).map((image, index) => ({...image, index: index}))
+        const numImages = top3Images.map((image, index) => image.index = index)
+        console.log('top3Images > ', top3Images)
+        console.log('numIMages > ', numImages)
+        res.render('artists/artist', { artist, top3Images, numImages})
       })
     })
     .catch(next)
