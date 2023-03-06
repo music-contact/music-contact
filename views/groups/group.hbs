@@ -8,7 +8,7 @@
             <div class="profile mr-3">
               <div class="artist-group-header">
                 <div class="img-name-artist-group-profile">
-                  <img src="{{#checkImage artist.image}}{{../artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                  <img src="{{#checkImage group.image}}{{../group.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                   <h4 class="media-body text-white artist-group-name-profile">{{group.name}}</h4>
                 </div>
                 <div class="edit-buttons">
@@ -86,7 +86,7 @@
           <h5 class="mb-0">Members</h5>
           <div class="p-4 rounded shadow-sm bg-light">
             {{#each group.artists as |artist| }}
-            <a href="/artists/{{artist.artistId.id}}">
+            <a style="text-decoration: none; color:black" href="/artists/{{artist.artistId.id}}">
               <p class="font-italic mb-0">
                 {{#checkOwner ../group.artistOwners.0.artistId.id artist.artistId.id}}
                   You*
@@ -98,19 +98,23 @@
             {{/each}}
           </div>
         </div>
+        {{#if group.description.length}}
         <div class="px-4 py-3">
           <h5 class="mb-0">Description</h5>
           <div class="p-4 rounded shadow-sm bg-light">
             <p class="font-italic mb-0">{{group.description}}</p>
           </div>
         </div>
+        {{/if}}
         {{#if group.topTracks.length}}
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
           <ul>
             {{#each group.topTracks as |track|}}
-            <p>{{track.name}}</p>
-            <p><audio controls src="{{track.url}}"></audio></p>
+            <li class="track-audio">
+              <p><i class="fa fa-spotify"></i>{{track.name}}</p>
+              <p><audio controls src="{{track.url}}"></audio></p>
+            </li>
             {{/each}}
           </ul>
         </div>
@@ -121,7 +125,31 @@
             <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
           </div>
           <div class="row">
-            {{#each group.images as |image|}}
+
+            <div id="carouselExampleIndicators" class="carousel slide">
+              <div class="carousel-indicators">
+                {{#each numImages as |num|}}
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{num}}" class="{{#if num}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
+                {{/each}}
+              </div> 
+              <div class="carousel-inner">
+              {{#each top3Images as |image|}}
+                <div class="carousel-item {{#if image.index}}{{else}}active{{/if}}">
+                  <img src="{{image._doc.url}}" class="d-block w-100" alt="...">
+                </div>
+              {{/each}}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>  
+
+            <!--{{#each group.images as |image|}}
             <div class="col-lg-6 mb-2 pr-lg-1"><img src="{{image.url}}" alt="" class="img-fluid rounded shadow-sm">
             </div>
             {{#checkOwner ../group.artistOwners.0.artistId.id ../currentArtist.id}}
@@ -136,7 +164,7 @@
               </button>
             </form>
             {{/checkOwner}}
-            {{/each}}
+            {{/each}}-->
           </div>
         </div>
         {{/if}}

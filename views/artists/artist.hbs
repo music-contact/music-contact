@@ -75,19 +75,23 @@
             </li>
           </ul>
         </div>
+        {{#if artist.description.length}}
         <div class="px-4 py-3">
           <h5 class="mb-0">Description</h5>
           <div class="p-4 rounded shadow-sm bg-light">
             <p class="font-italic mb-0">{{artist.description}}</p>
           </div>
         </div>
+        {{/if}}
         {{#if artist.topTracks.length}}
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
           <ul>
           {{#each artist.topTracks as |track|}}
-            <p>{{track.name}}</p>
+          <li class="track-audio">
+            <p><i class="fa fa-spotify"></i>{{track.name}}</p>
             <p><audio controls src="{{track.url}}"></audio></p>
+          </li>
           {{/each}}
           </ul>
         </div>
@@ -100,14 +104,14 @@
             <div class="col-lg-6 mb-2 pr-lg-1">
               <div class="card">
                 <img
-                  src="https://images.unsplash.com/photo-1516214104703-d870798883c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
+                  src="{{group.groupId.image}}"
                   alt="" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title">{{group.groupId.name}}</h5>
                   <a href="/groups/{{group.groupId.id}}" class="btn btn-outline-success btn-sm">Go to group</a>
                   {{#checkOwner ../artist.id ../currentArtist.id}}
                   <form action="/groups/{{group.groupId.id}}/delete" method="post">
-                    <button type="submit" class="btn btn-danger btn-sm">
+                    <button type="submit" class="btn btn-danger btn-sm mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                         </svg>

@@ -110,7 +110,9 @@ module.exports.detail = (req, res, next) => {
       return getTracks(group).then((group) => {
         // res.send('done!')
         // console.log('group > ', group.toJSON({ virtuals: true }))
-        res.render("groups/group", { group });
+        const top3Images = group.images.slice(0,3).map((image, index) => ({...image, index: index}))
+        const numImages = top3Images.map((image, index) => image.index = index)
+        res.render("groups/group", { group, top3Images, numImages });
       });
     })
     .catch(next);
