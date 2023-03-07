@@ -56,7 +56,7 @@ module.exports.list = (req, res, next) => {
         search: req.query.search
       }
       // console.log('currentFilter > ', res.locals.currentFilter)
-      console.log('filteredArtists > ', filteredArtists)
+      // console.log('filteredArtists > ', filteredArtists)
       res.render('artists/artists', { artists: filteredArtists, query: req.query })
       // res.send('done!')
     }))

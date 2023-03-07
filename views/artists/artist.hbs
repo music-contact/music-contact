@@ -135,14 +135,14 @@
           
             <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
-                {{#each numImages as |num|}}
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{num}}" class="{{#if num}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
+                {{#each top3Images as |image|}}
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{image.index}}" class="{{#if image.index}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
                 {{/each}}
               </div> 
               <div class="carousel-inner">
               {{#each top3Images as |image|}}
                 <div class="carousel-item {{#if image.index}}{{else}}active{{/if}}">
-                  <img src="{{image._doc.url}}" class="d-block w-100" alt="...">
+                  <img src="{{image.url}}" class="d-block w-100" alt="..." style="height: 200px; width: auto !important; left: 50%; transform: translateX(-50%); position: relative;" >
                 </div>
               {{/each}}
               </div>

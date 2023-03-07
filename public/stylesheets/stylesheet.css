@@ -590,3 +590,94 @@ h1 {
 .track-audio i {
   margin-right: 5px;
 }
+
+
+.facebook,
+.instagram,
+.email,
+.twitter,
+.spotify {
+  background-color: #e9ecef !important;
+}
+
+.facebook.fill {
+  background-color: #38529a !important;
+}
+
+.instagram.fill {
+  background: #f09433;
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
+}
+
+.email.fill {
+  background-color: #2fce74 !important;
+}
+.email.fill i {
+  color: white !important;
+}
+
+.twitter.fill {
+  background-color: #1d9bf0 !important;
+}
+
+.spotify.fill {
+  background-color: black !important;
+}
+
+.spotify.fill i {
+  color: #1ed860 !important
+}
+
+@media screen and (max-width: 1400px) {
+  #btn-sort span {
+    display: none !important;
+  }
+}
+
+#btncheck1+label{
+  border-right-width: 0px;
+}
+#btncheck2+label {
+  border-left-width: 0px;
+}
+
+.login-body, .register-body {
+  justify-content: center !important;
+}
+
+.dropdown-toggle-split:hover,.dropdown-toggle-split:focus {
+  color: var(--bs-purple) !important;
+}
+
+
+
+.header {
+  padding: 10px 16px;
+  background: #555;
+  color: #f1f1f1;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 1320px;
+  z-index: 1;
+}
+
+/* .sticky + .content {
+  padding-top: 144px;
+} */
+
+.sticky .filter-container {
+  backdrop-filter: blur(12px) !important;
+}
+
+.sticky .filter-container button, .sticky .filter-container a {
+  background: linear-gradient(45deg, #e96443, #904e95 100%);
+  opacity: 1;
+  border-style: dashed;
+}

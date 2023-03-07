@@ -1,35 +1,10 @@
 
 const mongoose = require('mongoose')
 const Artist = require('../models/artist.model')
-const ArtistGroup = require('../models/artist-group.model')
-const Images = require('../models/image.model')
 
 const SpotifyApi = require('../config/spotify.config')
 
 const bcrypt = require('bcryptjs')
-
-// module.exports.detail = (req, res, next) => {
-//   // console.log('detail > ', res.locals.currentArtist)
-//   Artist.findById(req.params.id)
-//     .then(artist => {
-//       // console.log('detail then > ', artist)
-//       return ArtistGroup.find({ artistId: { $eq: artist.id}})
-//             .populate('groupId')
-//             .then(artistGroups => {
-//               return Images.find({ author: { $eq: artist.id}})
-//               .then((images) => {
-//                 // Get an artist's top tracks
-//                 const spotifyId = artist.socialMedia.spotify?.split('/').pop()
-//                 return SpotifyApi.getArtistTopTracks(spotifyId, 'GB')
-//                 .then((data) => {
-//                   artist.topTracks = data.body.tracks.map(track => ({name: track.name, url: track.preview_url}))                
-//                   res.render('artists/artist', { artist, artistGroups, images })   
-//                 })
-//               })
-//             })
-//     })
-//     .catch(next)
-// }
 
 module.exports.detail = (req, res, next) => {
   // console.log('detail > ', res.locals.currentArtist)
@@ -56,12 +31,10 @@ module.exports.detail = (req, res, next) => {
     .then(artist => {
       return getTracks(artist).then((artist) => {
         // console.log('then getTracks > ', artist.toJSON({ virtuals: true }))
-        console.log('artist.images.slice(0,3) > ', artist.images.slice(0,3))
-        const top3Images = artist.images.slice(0,3).map((image, index) => ({...image, index: index}))
-        const numImages = top3Images.map((image, index) => image.index = index)
-        console.log('top3Images > ', top3Images)
-        console.log('numIMages > ', numImages)
-        res.render('artists/artist', { artist, top3Images, numImages})
+        const top3Images = JSON.parse(JSON.stringify(artist.images.slice(0,2)))
+        top3Images.forEach((image, index) =>  image.index = index)
+        // console.log('artist detail top3Images > ', top3Images)
+        res.render('artists/artist', { artist, top3Images})
       })
     })
     .catch(next)

@@ -1,25 +1,27 @@
 <header class="p-3 mb-0 bg-dark text-white">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/"
-        class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
           <use xlink:href="#bootstrap"></use>
         </svg>
       </a>
-     
+
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><img src="https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png" class="navbar-logo" alt="music-contact"></li>
         <li><a href="/artists" class="nav-link px-2 {{navActive currentPath '/artists'}}">Artists</a></li>
         <li><a href="/about" class="nav-link px-2 {{navActive currentPath '/about'}}">Contact</a>
         </li>
-      </ul> 
+      </ul>
 
       {{#if currentArtist}}
-      <div class="dropdown text-end">
-        <a href="#" class="d-block link-white text-decoration-none dropdown-toggle" id="dropdownUser1"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="{{#checkImage currentArtist.image}}{{../currentArtist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="mdo" width="32" height="32" class="rounded-circle" />
+
+      {{!-- <div class="dropdown text-end">
+        <a href="#" class="d-block link-white text-decoration-none dropdown-toggle dropdown-toggle-split"
+          id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img
+            src="{{#checkImage currentArtist.image}}{{../currentArtist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
+            alt="mdo" width="32" height="32" class="rounded-circle" />
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
           <li><a class="dropdown-item" href="/artists/{{currentArtist._id}}">Profile</a></li>
@@ -32,7 +34,33 @@
             </form>
           </li>
         </ul>
+      </div> --}}
+
+      <!-- Example split danger button -->
+      <div class="btn-group">
+        <a href="/artists/{{currentArtist._id}}" class="d-block link-white text-decoration-none" role="button"
+          aria-expanded="false">
+          <img
+            src="{{#checkImage currentArtist.image}}{{../currentArtist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
+            alt="mdo" width="32" height="32" class="rounded-circle" />
+        </a>
+        <button type="button" class="btn d-block link-white dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+          aria-expanded="false" style="border-width: 0px;">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/artists/{{currentArtist._id}}">Profile</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <form action="/logout" method="post" style="margin: 0;">
+              <button type="submit" class="btn dropdown-item">Log out</button>
+            </form>
+          </li>
+        </ul>
       </div>
+
       {{else}}
       <div class="text-end">
         <a href="/login" class="btn btn-outline-light me-2">Login</a>
