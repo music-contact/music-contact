@@ -3,7 +3,7 @@ const Group = require('../models/group.model')
 const ArtistGroup = require('../models/artist-group.model')
 
 module.exports.list = (req, res, next) => {
-  console.log('list artist?.id> ', req.artist?.id)
+  // console.log('list artist?.id> ', req.artist?.id)
   Promise.all([
     Artist.find({ email: { $ne: req.artist?.email } })
       .populate({
@@ -32,7 +32,7 @@ module.exports.list = (req, res, next) => {
       const artists = [...uniqueArtists, ...uniqueGroups]   
       // console.log('artists > ', artists) 
       let filteredArtists = artists
-      console.log(req.query.search)
+      // console.log(req.query.search)
       if(req.query.search) {
         filteredArtists = artists.filter(artist => artist.name.startsWith(req.query.search))
       }

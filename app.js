@@ -31,7 +31,7 @@ require('./config/hbs.config')
 app.set('view engine', 'hbs')
 app.set('views', `${__dirname}/views`)
 
-//Configure current path
+// Configure current path
 app.use((req, res, next) => {
   res.locals.currentPath = req.path
   next()

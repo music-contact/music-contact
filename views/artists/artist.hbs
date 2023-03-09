@@ -8,7 +8,9 @@
             <div class="profile mr-3">
               <div class="artist-group-header">
                 <div class="img-name-artist-group-profile">
-                  <img src="{{#checkImage artist.image}}{{../artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                  <img
+                    src="{{#checkImage artist.image}}{{../artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
+                    alt="..." width="130" class="rounded mb-2 img-thumbnail">
                   <h4 class="media-body text-white artist-group-name-profile">{{artist.name}}</h4>
                 </div>
                 <div class="edit-buttons">
@@ -17,10 +19,12 @@
                     style="color: white !important;">Edit profile</a>
                   {{/checkOwner}}
                   {{#checkOwner artist.id currentArtist.id}}
-                  <a href="/groups/new" class="btn btn-sm btn-block btn-outline-warning mb-2" style="color: white !important;">Add Group</a>
+                  <a href="/groups/new" class="btn btn-sm btn-block btn-outline-warning mb-2"
+                    style="color: white !important;">Add Group</a>
                   {{/checkOwner}}
                   {{#checkOwner artist.id currentArtist.id}}
-                  <a href="/images/{{../currentArtist.id}}/new" class="btn btn-sm btn-block btn-outline-warning" style="color: white !important;">Add Photo</a>
+                  <a href="/images/{{../currentArtist.id}}/new" class="btn btn-sm btn-block btn-outline-warning"
+                    style="color: white !important;">Add Photo</a>
                   {{/checkOwner}}
                 </div>
               </div>
@@ -87,12 +91,12 @@
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
           <ul>
-          {{#each artist.topTracks as |track|}}
-          <li class="track-audio">
-            <p><i class="fa fa-spotify"></i>{{track.name}}</p>
-            <p><audio controls src="{{track.url}}"></audio></p>
-          </li>
-          {{/each}}
+            {{#each artist.topTracks as |track|}}
+            <li class="track-audio">
+              <p><i class="fa fa-spotify"></i>{{track.name}}</p>
+              <p><audio controls src="{{track.url}}"></audio></p>
+            </li>
+            {{/each}}
           </ul>
         </div>
         {{/if}}
@@ -103,22 +107,30 @@
             {{#each artist.groups as |group|}}
             <div class="col-lg-6 mb-2 pr-lg-1">
               <div class="card">
-                <img
-                  src="{{group.groupId.image}}"
-                  alt="" class="card-img-top">
+                <img src="{{group.groupId.image}}" alt="" class="card-img-top"
+                  style="height: 200px;width: fit-content;left: 50%;transform: translateX(-50%);position: relative;padding-top: 20px;">
                 <div class="card-body">
                   <h5 class="card-title">{{group.groupId.name}}</h5>
-                  <a href="/groups/{{group.groupId.id}}" class="btn btn-outline-success btn-sm">Go to group</a>
-                  {{#checkOwner ../artist.id ../currentArtist.id}}
-                  <form action="/groups/{{group.groupId.id}}/delete" method="post">
-                    <button type="submit" class="btn btn-danger btn-sm mt-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                        Delete
-                    </button>
-                  </form>
-                  {{/checkOwner}}
+                  <div class="row" style="margin-top: 20px;">
+                    <div class="col" style="display: flex;justify-content: center;align-items: center;">
+                      <a href="/groups/{{group.groupId.id}}" class="btn btn-outline-success btn-sm" style="margin: 0">Go
+                        to group</a>
+                    </div>
+                    <div class="col" style="display: flex;justify-content: center;align-items: center;">
+                      {{#checkOwner ../artist.id ../currentArtist.id}}
+                      <form action="/groups/{{group.groupId.id}}/delete" method="post" style="margin: 0;">
+                        <button type="submit" class="btn btn-danger btn-sm mt-2" style="margin: 0 !important;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path
+                              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                          </svg>
+                          Delete
+                        </button>
+                      </form>
+                      {{/checkOwner}}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -129,32 +141,55 @@
         {{#if artist.images.length}}
         <div class="py-4 px-4">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+            <h5 class="mb-0">Recent photos</h5>
+            <!-- Button trigger modal -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">Show All</a>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalFullscreen" tabindex="-1"
+              aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">Full screen modal</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="row">            
-          
+          <div class="row">
             <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
                 {{#each top3Images as |image|}}
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{image.index}}" class="{{#if image.index}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{image.index}}"
+                  class="{{#if image.index}}{{else}}active{{/if}}" aria-current="true" aria-label="Slide 1"></button>
                 {{/each}}
-              </div> 
-              <div class="carousel-inner">
-              {{#each top3Images as |image|}}
-                <div class="carousel-item {{#if image.index}}{{else}}active{{/if}}">
-                  <img src="{{image.url}}" class="d-block w-100" alt="..." style="height: 200px; width: auto !important; left: 50%; transform: translateX(-50%); position: relative;" >
-                </div>
-              {{/each}}
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <div class="carousel-inner">
+                {{#each top3Images as |image|}}
+                <div class="carousel-item {{#if image.index}}{{else}}active{{/if}}">
+                  <img src="{{image.url}}" class="d-block w-100" alt="..."
+                    style="height: 200px; width: auto !important; left: 50%; transform: translateX(-50%); position: relative;">
+                </div>
+                {{/each}}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
-            </div>  
+            </div>
             <!--<div class="col-lg-6 mb-2 pr-lg-1"><img
                 src="{{image.url}}"
                 alt="" class="img-fluid rounded shadow-sm">

@@ -1,5 +1,4 @@
 const hbs = require('hbs')
-const { options } = require('./routes.config')
 
 hbs.registerPartials(`${__dirname}/../views/partials`)
 
@@ -22,7 +21,7 @@ hbs.registerHelper('checkSocial', (link, options) => {
 hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
   // console.log('checkOwner artistId > ', artistId)
   // console.log('checkOwner currentArtistId > ', currentArtistId)
-  if (!artistId || !currentArtistId || artistId != currentArtistId){
+  if (!artistId || !currentArtistId || artistId != currentArtistId) {
     return options.inverse()
   } else {
     return options.fn()
@@ -33,7 +32,7 @@ hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
   // } else {
   //   return options.inverse()
   // }
-}) 
+})
 
 hbs.registerHelper("navActive", (currentPath, desiredPath) => {
   return currentPath === desiredPath ? "active" : "";
@@ -45,4 +44,10 @@ hbs.registerHelper('checkImage', (image, options) => {
   } else {
     return options.inverse()
   }
+})
+
+hbs.registerHelper("fixNavbar", (currentPath, options) => {
+  return !currentPath.split('/')
+    .pop()
+    .includes('artists') ? "sticky-top" : ""
 })
