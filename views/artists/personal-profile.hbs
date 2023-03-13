@@ -1,12 +1,12 @@
 {{> header}}
-<div class="register-body">
+<div class="register-body body-profile">
   {{#if errors}}
   <div class="alert alert-danger">
     review form data
   </div>
   {{/if}}
 
-  <form action="/artists/{{currentArtist._id}}" method="post" enctype="multipart/form-data" class="profile-form">
+  <form action="/artists/{{currentArtist._id}}" method="post" enctype="multipart/form-data" class="profile-form" style="  margin-bottom: 70px;">
     <div class="container">
       <div class="row">
         <div class="col">
@@ -33,7 +33,7 @@
           </div>
           <div class="mb-3">
             <label for="descriptionTextarea" class="form-label">Description</label>
-            <textarea name="description" class="form-control" placeholder=""
+            <textarea name="description" class="form-control" style="max-height: 150px; min-height: 61px;" placeholder=""
               id="descriptionTextarea">{{currentArtist.description}}</textarea>
           </div>
           <hr>
@@ -42,39 +42,39 @@
           {{!-- COLUMN 2 --}}
           <label class="form-label">Social media</label>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text facebook" id="basic-addon1">
               <i class="fa fa-facebook-official social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[facebook]" value="{{currentArtist.socialMedia.facebook}}"
-              class="form-control">
+            <input id="facebook" oninput="checkValue(this)" type="text" name="socialMedia[facebook]"
+              value="{{currentArtist.socialMedia.facebook}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text instagram" id="basic-addon1">
               <i class="fa fa-instagram social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[instagram]" value="{{currentArtist.socialMedia.instagram}}"
-              class="form-control">
+            <input id="instagram" oninput="checkValue(this)" type="text" name="socialMedia[instagram]"
+              value="{{currentArtist.socialMedia.instagram}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text email" id="basic-addon1">
               <i class="fa fa-envelope-o social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[email]" value="{{currentArtist.socialMedia.email}}"
-              class="form-control">
+            <input id="email" oninput="checkValue(this)" type="text" name="socialMedia[email]" value="{{currentArtist.socialMedia.email}}"
+              class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <input id="twitter" type="text" placeholder = "Enter a value" name="socialMedia[twitter]" value="{{currentArtist.socialMedia.twitter}}"
-              class="form-control">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text twitter" id="basic-addon1">
               <i class="fa fa-twitter-square social-icon fa-fw" aria-hidden="true"></i>
             </span>
+            <input id="twitter" oninput="checkValue(this)" type="text" name="socialMedia[twitter]"
+              value="{{currentArtist.socialMedia.twitter}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text spotify" id="basic-addon1">
               <i class="fa fa-spotify social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[spotify]" value="{{currentArtist.socialMedia.spotify}}"
-              class="form-control">
+            <input id="spotify" oninput="checkValue(this)" type="text" name="socialMedia[spotify]"
+              value="{{currentArtist.socialMedia.spotify}}" class="form-control social">
           </div>
           <hr>
         </div>
@@ -84,12 +84,12 @@
           <div style="height: 100%; display: flex; flex-direction: column; justify-content: flex-start;">
             <div class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
               <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="true" {{#checkStatus
-                currentArtist.findGroup}}checked{{/checkStatus}}>
+                currentArtist.findGroup}}checked{{/checkStatus}} name="findGroup">
               <label class="btn btn-outline-info" for="btncheck1">Looking for group</label>
-
-              <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="true">
-              <label class="btn btn-outline-primary" for="btncheck2" {{#checkStatus
-                currentArtist.forActing}}checked{{/checkStatus}}>Available</label>
+              
+              <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="true" {{#checkStatus
+                currentArtist.forActing}}checked{{/checkStatus}} name="forActing">
+              <label class="btn btn-outline-info" for="btncheck2">Available</label>
             </div>
             {{!-- <ul class="list-group list-group-horizontal mb-3">
               <li class="list-group-item form-checkbox ">
@@ -127,5 +127,22 @@
 </div>
 
 <script>
+  window.addEventListener("load", (event) => {
+    const headerHeight = getComputedStyle(document.querySelector('.sticky-top')).height
+    document.querySelector('.body-profile').style.height = `calc(100vh - ${headerHeight})`
+    document.querySelector('.body-profile').style.minHeight = "auto";
 
+    const socialInptus = [...document.getElementsByClassName('social')]
+    socialInptus.forEach(input => {
+      checkValue(input)
+    })
+  });
+
+  function checkValue(el) {
+    if (el.value.length) {
+      document.getElementsByClassName(`${el.id}`)[0].classList.add('fill')
+    } else {
+      document.getElementsByClassName(`${el.id}`)[0].classList.remove('fill')
+    }
+  }
 </script>

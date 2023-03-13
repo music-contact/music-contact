@@ -7,7 +7,7 @@
         <div style="width: 60%">
           <form style="width: 100%">
             <input id="search" value="{{query.search}}" data="{{query.search}}" name="search" type="text"
-              placeholder="Search..." class="filter-input" style="width: 100%;">
+              placeholder="Find your style..." class="filter-input" style="width: 100%;">
           </form>
         </div>
         <div class="dropdown mx-3">
@@ -36,7 +36,7 @@
           </ul>
         </div>
         <div class="mx-3">
-          <a href="/artists" class="btn btn-outline-light">Clear</a>
+          <a id="clear-btn" href="/artists" class="btn btn-outline-light">Clear</a>
         </div>
       </div>
     </div>
@@ -48,10 +48,13 @@
             <div class="col-md-6 col-lg-4 item">
               <div class="box"><img class="artists-image"
                   src="{{#checkImage artist.image}}{{artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}">
-                <h3 class="name">{{artist.name}}</h3>
+                {{!-- <h3 class="name">{{artist.name}}</h3> --}}
+                <h3 class="name">
+                  <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}" style="color:black; text-decoration: none;">{{artist.name}}</a>
+                </h3>
                 {{#if artist.isArtist}}
                 <p class="title">Artist</p>
-                <div>
+                <div style="margin-bottom:10px">
                   {{#each artist.groups as |group|}}
                   <span class="list-inline-item">
                     <a href="/groups/{{group.groupId.id}}">
@@ -64,7 +67,7 @@
                 </div>
                 {{else}}
                 <p class="title">Group</p>
-                <div>
+                <div style="margin-bottom:10px">
                   {{#each artist.artists as |person|}}
                   <span class="list-inline-item">
                     <a href="/artists/{{person.artistId.id}}">
@@ -76,7 +79,7 @@
                   {{/each}}
                 </div>
                 {{/if}}
-                <p class="description">{{artist.description}}</p>
+                {{!-- <p class="description">{{artist.description}}</p> --}}
                 <div class="social">
                   {{#checkSocial artist.socialMedia.facebook}}
                   <a href="{{artist.socialMedia.facebook}}" target="_blank"><i class="fa fa-facebook-official"></i></a>
@@ -91,8 +94,8 @@
                   <a href="{{artist.socialMedia.spotify}}" target="_blank"><i class="fa fa-spotify"></i></a>
                   {{/checkSocial}}
                 </div>
-                <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
-                  class="btn btn-primary-see-detail mt-3">See details</a>
+                {{!-- <a href="{{#if artist.isArtist}}/artists/{{artist.id}}{{else}}/groups/{{artist.id}}{{/if}}"
+                  class="btn btn-primary-see-detail mt-3">See details</a> --}}
               </div>
             </div>
             {{/each}}
@@ -139,8 +142,6 @@
 
   window.onscroll = function () { fixSearchbar() };
 
-  /*
-  */
   function debounce(callback, wait) {
     // console.log(...arguments)
     let timeout
@@ -153,8 +154,6 @@
     }
   }
 
-  /*
-  */
   document.getElementById('search').addEventListener('keyup', debounce((scope, ev) => { // comportamiento similar!? al middleware configurable de express...
     let url
     const href = window.location.href
@@ -164,11 +163,11 @@
     const sort = document.getElementById('sort').getAttribute('data')
     const type = document.getElementById('type').getAttribute('data')
 
-  console.log('ev > ', ev[0].target.value)
+    console.log('ev > ', ev[0].target.value)
     if (!href.includes('?')) {
       url = `${path}?search=${ev[0].target.value}`
     } else {
-      url = `${href.split('search')[0]}${!href.includes('&')?'&':''}search=${ev[0].target.value}`
+      url = `${href.split('search')[0]}${!href.includes('&') ? '&' : ''}search=${ev[0].target.value}`
     }
     // console.log('url > ', url)
     // window.location.href = window.location.href

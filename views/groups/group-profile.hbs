@@ -1,5 +1,5 @@
 {{> header}}
-<div class="register-body">
+<div class="register-body body-profile">
   {{#if errors}}
   <div class="alert alert-danger">
     review form data
@@ -7,7 +7,7 @@
   {{/if}}
 
   <form action="{{#if currentGroup}} /groups/{{currentGroup.id}} {{else}} /groups/new{{/if}}" method="post"
-    enctype="multipart/form-data" class="profile-form">
+    enctype="multipart/form-data" class="profile-form" style="margin-bottom: 70px;">
     <div class="container">
       <div class="row">
         <div class="col">
@@ -34,92 +34,93 @@
           </div>
           <div class="mb-3">
             <label for="descriptionTextarea">Description</label>
-            <textarea name="description" class="form-control" placeholder=""
-              id="descriptionTextarea">{{currentGroup.description}}</textarea>
+            <textarea name="description" class="form-control" style="max-height: 150px; min-height: 61px;"
+              placeholder="" id="descriptionTextarea">{{currentGroup.description}}</textarea>
           </div>
-          {{!--
-          <hr>
-          <div class="mb-3">
-            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-              {{#each candidates as |candidate|}}
-              <input type="checkbox" name="candidate" value="{{candidate.id}}" class="form-control btn-check"
-                id="{{candidate.email}}" autocomplete="off">
-              <label class="btn btn-outline-primary" for="{{candidate.email}}">{{candidate.email}}</label>
-              {{/each}}
-            </div>
-          </div> --}}
           <hr>
         </div>
         <div class="col">
           {{!-- COLUMN 2 --}}
           <label class="form-label">Social media</label>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text facebook" id="basic-addon1">
               <i class="fa fa-facebook-official social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[facebook]" value="{{currentGroup.socialMedia.facebook}}"
-              class="form-control">
+            <input id="facebook" oninput="checkValue(this)" type="text" name="socialMedia[facebook]"
+              value="{{currentGroup.socialMedia.facebook}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text instagram" id="basic-addon1">
               <i class="fa fa-instagram social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[instagram]" value="{{currentGroup.socialMedia.instagram}}"
-              class="form-control">
+            <input id="instagram" oninput="checkValue(this)" type="text" name="socialMedia[instagram]"
+              value="{{currentGroup.socialMedia.instagram}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text email" id="basic-addon1">
               <i class="fa fa-envelope-o social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[email]" value="{{currentGroup.socialMedia.email}}"
-              class="form-control">
+            <input id="email" oninput="checkValue(this)" type="text" name="socialMedia[email]"
+              value="{{currentGroup.socialMedia.email}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text twitter" id="basic-addon1">
               <i class="fa fa-twitter-square social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[twitter]" value="{{currentGroup.socialMedia.twitter}}"
-              class="form-control">
+            <input id="twitter" oninput="checkValue(this)" type="text" name="socialMedia[twitter]"
+              value="{{currentGroup.socialMedia.twitter}}" class="form-control social">
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+            <span class="input-group-text spotify" id="basic-addon1">
               <i class="fa fa-spotify social-icon fa-fw" aria-hidden="true"></i>
             </span>
-            <input type="text" name="socialMedia[spotify]" value="{{currentGroup.socialMedia.spotify}}"
-              class="form-control">
+            <input id="spotify" oninput="checkValue(this)" type="text" name="socialMedia[spotify]"
+              value="{{currentGroup.socialMedia.spotify}}" class="form-control social">
           </div>
           <hr>
         </div>
         <div class="col">
           {{!-- COLUMN 3 --}}
-          <label class="form-label">Otros</label>
-          <div style="height: 100%; display: flex; flex-direction: column; justify-content: flex-start;">
-            <div class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
-              <input type="checkbox" class="btn-check" autocomplete="off" name="forActing" value="true" id="forActing">
-              <label class="btn btn-outline-primary" for="forActing" {{#checkStatus
-                currentGroup.forActing}}checked{{/checkStatus}}>Available</label>
+          <div class="mb-3">
+            <label for="addParticipants" class="form-label">Participants</label>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add / Remove
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class=" modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: black;">Participants</h1>
+                    {{!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                  </div>
+                  <div class="modal-body" style="overflow-x: hidden;">
+                    {{#each candidates as |candidate|}}
+                    <input type="checkbox" name="candidate" value="{{candidate.id}}" class="form-control btn-check"
+                      id="{{candidate.email}}" autocomplete="off" {{isMember ../currentGroup.artists candidate}}>
+                    <label class="btn btn-primary mb-3 me-3" for="{{candidate.email}}">{{candidate.email}}</label>
+                    {{/each}}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    {{!-- <button id="save-changes" type="button" class="btn btn-primary">Save changes</button> --}}
+                  </div>
+                </div>
+              </div>
             </div>
-            {{!-- <ul class="list-group list-group-horizontal mb-3">
-              <li class="list-group-item form-checkbox ">
-                <input class="form-check-input me-1" type="checkbox" name="forActing" value="true" id="forActing"
-                  {{#checkStatus currentGroup.forActing}}checked{{/checkStatus}}>
-                <label class="form-check-label stretched-link" for="forActing">Available</label>
-              </li>
-            </ul> --}}
+          </div>
+          <div style="height: 100%; display: flex; flex-direction: column; justify-content: flex-start;">
+            <label class="form-label">Otros</label>
+            <div class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
+              <input type="checkbox" class="btn-check" autocomplete="off" name="forActing" value="true" id="forActing" {{#checkStatus currentGroup.forActing}}checked{{/checkStatus}}>
+              <label class="btn btn-outline-info" for="forActing">Available</label>
+            </div>
             <div class="input-group mb-3">
               <label class="input-group-text btn btn-warning" for="image">Upload Image</label>
               <input type="file" class="form-control" name="image" id="image">
             </div>
-            {{!-- <div class="mb-3">
-              <label for="password">Password</label>
-              <input name="password" value="{{currentGroup.password}}" type="password"
-                class="form-control {{#if errors.password}}is-invalid{{/if}}" id="password" />
-              {{#if errors.password}}
-              <div class="invalid-feedback">
-                {{errors.password}}
-              </div>
-              {{/if}}
-            </div> --}}
             <button type="submit" class="btn btn-primary mt-3">Update</button>
           </div>
           <hr>
@@ -128,3 +129,24 @@
     </div>
   </form>
 </div>
+
+<script>
+  window.addEventListener("load", (event) => {
+    const headerHeight = getComputedStyle(document.querySelector('.sticky-top')).height
+    document.querySelector('.body-profile').style.height = `calc(100vh - ${headerHeight})`
+    document.querySelector('.body-profile').style.minHeight = "auto";
+
+    const socialInptus = [...document.getElementsByClassName('social')]
+    socialInptus.forEach(input => {
+      checkValue(input)
+    })
+  });
+
+  function checkValue(el) {
+    if (el.value.length) {
+      document.getElementsByClassName(`${el.id}`)[0].classList.add('fill')
+    } else {
+      document.getElementsByClassName(`${el.id}`)[0].classList.remove('fill')
+    }
+  }
+</script>

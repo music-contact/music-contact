@@ -26,12 +26,6 @@ hbs.registerHelper('checkOwner', (artistId, currentArtistId, options) => {
   } else {
     return options.fn()
   }
-
-  // if(artistId == currentArtistId) {
-  //   return options.fn() 
-  // } else {
-  //   return options.inverse()
-  // }
 })
 
 hbs.registerHelper("navActive", (currentPath, desiredPath) => {
@@ -50,4 +44,9 @@ hbs.registerHelper("fixNavbar", (currentPath, options) => {
   return !currentPath.split('/')
     .pop()
     .includes('artists') ? "sticky-top" : ""
+})
+
+hbs.registerHelper('isMember', (members, candidate) => {
+  // console.log('isMember > ', members.some((member) => member.artistId.id === candidate.id))
+  return members.some((member) => member.artistId.id === candidate.id) ? "checked" : ""
 })

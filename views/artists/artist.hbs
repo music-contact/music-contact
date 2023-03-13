@@ -107,10 +107,12 @@
             {{#each artist.groups as |group|}}
             <div class="col-lg-6 mb-2 pr-lg-1">
               <div class="card">
-                <img src="{{group.groupId.image}}" alt="" class="card-img-top"
+                <img
+                  src="{{#checkImage group.groupId.image}}{{group.groupId.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
+                  alt="" class="card-img-top"
                   style="height: 200px;width: fit-content;left: 50%;transform: translateX(-50%);position: relative;padding-top: 20px;">
                 <div class="card-body">
-                  <h5 class="card-title">{{group.groupId.name}}</h5>
+                  <h5 class="card-title text-center">{{group.groupId.name}}</h5>
                   <div class="row" style="margin-top: 20px;">
                     <div class="col" style="display: flex;justify-content: center;align-items: center;">
                       <a href="/groups/{{group.groupId.id}}" class="btn btn-outline-success btn-sm" style="margin: 0">Go
@@ -149,16 +151,23 @@
               aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
               <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">Full screen modal</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-header bg-dark">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel" style="color: white">My photo gallery</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    ...
+                    {{!-- Gallery --}}
+                    <div class="row">
+                      {{#each artist.images as |image|}}
+                      <div class="col-4 d-flex justify-content-center mb-3">
+                        <img src="{{image.url}}" alt="" srcset="" style="  height: 200px; width: auto;">
+                      </div>
+                      {{/each}}
+                    </div>
                   </div>
-                  <div class="modal-footer">
+                  {{!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
             </div>

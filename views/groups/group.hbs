@@ -122,10 +122,37 @@
         {{#if group.images.length }}
         <div class="py-4 px-4">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+            <h5 class="mb-0">Recent photos</h5>
+            {{!-- <a href="#" class="btn btn-link text-muted">Show all</a> --}}
+            <!-- Button trigger modal -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">Show All</a>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalFullscreen" tabindex="-1"
+              aria-labelledby="exampleModalFullscreenLabel" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="exampleModalFullscreenLabel">Full screen modal</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    {{!-- Gallery --}}
+                    <div class="row">
+                      {{#each group.images as |image|}}
+                      <div class="col-4 d-flex justify-content-center mb-3">
+                        <img src="{{image.url}}" alt="" srcset="" style="  height: 200px; width: auto;">
+                      </div>
+                      {{/each}}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row">
-
             <div id="carouselExampleIndicators" class="carousel slide">
               <div class="carousel-indicators">
                 {{#each top3Images as |image|}}

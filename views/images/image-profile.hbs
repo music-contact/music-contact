@@ -1,8 +1,7 @@
  {{> header}}
- <div class="body-artist">
-  <div class="multiple-images">
-    <h1 class="multiple-images-title">Select and upload your images</h1>
-
+ <div class="body-artist body-profile">
+  <div class="multiple-images" style="margin-bottom: 70px;">
+    <h1 class="multiple-images-title" style="text-align: center;">Select and upload your images</h1>
     <form action="{{url}}" method="post" enctype="multipart/form-data">
       <div class="input-group mb-3">
         <label class="input-group-text btn btn-warning" for="image">Upload Image</label>
@@ -12,3 +11,14 @@
     </form>
   </div>
 </div>
+
+<script>
+  window.addEventListener('load', (ev) => {
+    {{!-- console.log('loaded!')
+    console.log(getComputedStyle(document.querySelector('.sticky-top')).height) --}}
+    const headerHeight = getComputedStyle(document.querySelector('.sticky-top')).height
+    document.querySelector('.body-profile').style.height = `calc(100vh - ${headerHeight})`
+    document.querySelector('.body-profile').style.minHeight = "auto";
+
+  })
+</script>

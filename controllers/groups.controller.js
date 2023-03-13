@@ -8,7 +8,7 @@ const Images = require("../models/image.model");
 const SpotifyApi = require("../config/spotify.config");
 
 module.exports.detail = (req, res, next) => {
-  console.log("group detail > ", req.params.id);
+  // console.log("group detail > ", req.params.id);
   // console.log("detail > ", req.artist?.id);
 
   function getTracks(group) {
@@ -46,14 +46,14 @@ module.exports.detail = (req, res, next) => {
       path: "images",
     })
     .then((group) => {
-      console.log("group > ", group.toJSON({ virtuals: true }));
+      // console.log("group > ", group.toJSON({ virtuals: true }));
       // console.log('req.artist?.id > ', req.artist?.id)
       // console.log('group.artists[0]?.artistId > ', group.artists[0]?.artistId)
       return getTracks(group).then((group) => {
         // res.send('done!')
         // console.log('group > ', group.toJSON({ virtuals: true }))
-        const top3Images = JSON.parse(JSON.stringify(group.images.slice(0,2)))
-        top3Images.forEach((image, index) =>  image.index = index)
+        const top3Images = JSON.parse(JSON.stringify(group.images.slice(0, 2)))
+        top3Images.forEach((image, index) => image.index = index)
         res.render("groups/group", { group, top3Images });
       });
     })
@@ -109,27 +109,66 @@ module.exports.doNew = (req, res, next) => {
 
 module.exports.edit = (req, res, next) => {
   // res.locals.currentGroup
-  Group.findById(req.params.id).then((currentGroup) => {
-    console.log("group edit > ", currentGroup);
-    return Artist.find({ _id: { $ne: mongoose.Types.ObjectId(req.artist?.id) } }).then((candidates) => {
-      console.log('candidates to group > ', candidates)
-      res.render("groups/group-profile", { currentGroup, candidates });
+  Group.findById(req.params.id)
+    .populate({
+      path: 'artists',
+      populate: {
+        path: 'artistId'
+      }
     })
-  })
+    .then((currentGroup) => {
+      return Artist.find({ _id: { $ne: mongoose.Types.ObjectId(req.artist?.id) } }).then((candidates) => {
+        res.render("groups/group-profile", { currentGroup, candidates });
+      })
+    })
     .catch(next);
+
 };
 
 module.exports.doEdit = (req, res, next) => {
+  // console.log('doEdit > ', req.body.candidate)
   if (req.files.length === 1) {
     req.body.image = req.files[0].path;
   }
   if (!req.body.forActing) {
     req.body.forActing = "false";
   }
+
   Group.findByIdAndUpdate(req.params.id, req.body)
+    .populate({
+      path: 'artists'
+    })
     .then((group) => {
-      res.redirect(`/groups/${group.id}`);
-      // TODO: SI HAY CANDIDATOS, AÑADIR DOCS CORRESPONDIENTES EN ARTISTGROUPS CON ROLE NULL 
+      let candidates;
+      if (!Array.isArray(req.body.candidate)) {
+        candidates = [req.body.candidate]
+      } else {
+        candidates = req.body.candidate
+      }
+
+      const exMemberIds = group.artists
+      .filter((member) => !candidates.includes(member.artistId.toString()) && member.artistId.toString() != req.artist?.id)
+      .map((exMember) => exMember.artistId)
+
+      return ArtistGroup.find({ $or: [{ artistId: candidates }, { artistId: req.artist?.id }] })
+        .then((members) => {
+          const memberIds = members.map(el => el.artistId.toString())
+
+          const newMembers = candidates
+          .filter((candidate) => !memberIds.includes(candidate) && candidate)
+          .map(id => {
+            return {
+              artistId: id,
+              groupId: group.id
+            }
+          })
+
+          return ArtistGroup.deleteMany({ artistId: { $in: exMemberIds } }).then(() => {
+            return ArtistGroup.insertMany(newMembers).then((resp) => {
+              res.redirect(`/groups/${group.id}`);
+            })
+          })
+        })
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {
