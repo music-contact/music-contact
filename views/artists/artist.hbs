@@ -10,7 +10,7 @@
                 <div class="img-name-artist-group-profile">
                   <img
                     src="{{#checkImage artist.image}}{{../artist.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
-                    alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                    alt="..." width="130" class="rounded mb-2 img-thumbnail" style="height: 120px;width: auto;">
                   <h4 class="media-body text-white artist-group-name-profile">{{artist.name}}</h4>
                 </div>
                 <div class="edit-buttons">
@@ -90,7 +90,7 @@
         {{#if artist.topTracks.length}}
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
-          <ul>
+          <ul style="padding: 0 !important;">
             {{#each artist.topTracks as |track|}}
             <li class="track-audio">
               <p><i class="fa fa-spotify"></i>{{track.name}}</p>
@@ -109,8 +109,8 @@
               <div class="card">
                 <img
                   src="{{#checkImage group.groupId.image}}{{group.groupId.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}"
-                  alt="" class="card-img-top px-3"
-                  style="height: 200px;width: auto;left: 50%;transform: translateX(-50%);position: relative;padding-top: 20px;">
+                  alt="" class="card-img-top"
+                  style="max-height: 200px;width: auto;left: 50%;transform: translateX(-50%) scale(0.9);position: relative;padding-top: 20px;">
                 <div class="card-body">
                   <h5 class="card-title text-center">{{group.groupId.name}}</h5>
                   <div class="row" style="margin-top: 20px;">

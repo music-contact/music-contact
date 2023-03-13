@@ -8,7 +8,7 @@
             <div class="profile mr-3">
               <div class="artist-group-header">
                 <div class="img-name-artist-group-profile">
-                  <img src="{{#checkImage group.image}}{{../group.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                  <img src="{{#checkImage group.image}}{{../group.image}}{{else}} https://pbs.twimg.com/media/D0u1DoOX4AMg_d_.png {{/checkImage}}" alt="..." width="130" class="rounded mb-2 img-thumbnail" style="height: 120px;width: auto;">
                   <h4 class="media-body text-white artist-group-name-profile">{{group.name}}</h4>
                 </div>
                 <div class="edit-buttons">
@@ -109,7 +109,7 @@
         {{#if group.topTracks.length}}
         <div class="px-4 py-3">
           <h5 class="mb-3">My Songs</h5>
-          <ul>
+          <ul style="padding: 0">
             {{#each group.topTracks as |track|}}
             <li class="track-audio">
               <p><i class="fa fa-spotify"></i>{{track.name}}</p>
