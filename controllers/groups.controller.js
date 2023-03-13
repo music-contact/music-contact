@@ -78,10 +78,10 @@ module.exports.doNew = (req, res, next) => {
   };
 
   // console.log('group doNew > ', newGroup )
-  Group.findOne({ email: newGroup.email })
+  Group.findOne({ email: req.body.email })
     .then((group) => {
       if (!group) {
-        return Group.create(newGroup).then((group) => {
+        return Group.create(req.body).then((group) => {
           return ArtistGroup.create({
             artistId: req.artist.id,
             groupId: group.id,
@@ -99,7 +99,7 @@ module.exports.doNew = (req, res, next) => {
       if (error instanceof mongoose.Error.ValidationError) {
         res.render("groups/group-profile", {
           errors: error.errors,
-          currentGroup: newGroup,
+          currentGroup: register.body,
         });
       } else {
         next(error);

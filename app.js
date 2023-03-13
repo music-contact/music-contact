@@ -1,11 +1,10 @@
+// Configure dotenv
+require('dotenv').config()
 // Configure database
 require('./config/db.config')
 
 //Require Errors
 const createError = require('http-errors');
-
-// Configure dotenv
-require('dotenv').config()
 
 const express = require('express');
 const app = express();
