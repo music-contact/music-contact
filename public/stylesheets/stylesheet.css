@@ -1,3 +1,15 @@
+.invalid-feedback {
+  color: white
+}
+
+.alert + img {
+  margin-top: 0px
+}
+
+.alert ~ form {
+  margin-bottom: 20px !important;
+}
+
 *::-webkit-scrollbar {
   display: none;
 }
