@@ -3,8 +3,8 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/music-
 
 mongoose
   .connect(MONGODB_URI)
-  .then(() => console.info(`Successfully connected to the database ${MONGODB_URI}`))
-  .catch((error) => console.error(`An error ocurred when trying to connect to the database ${MONGODB_URI}`, error))  
+  .then(() => console.info(`Successfully connected to the database`))
+  .catch((error) => console.error(`An error ocurred when trying to connect to the database`, error))  
 
 // Stackoverflow: https://stackoverflow.com/questions/34319661/how-to-handle-mongodb-close-in-mongoose
 // Well here is an idea that I think might be helpful. Node.js receives unix signals. So for example Ctrl+C sends a unix signal (SIGINT) to the Node.js application you're running in that terminal to terminate.
